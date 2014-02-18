@@ -1,0 +1,21 @@
+Aubin
+warrior
+grab bedpan
+use bedpan
+grab key
+go e
+go s
+bag
+use key
+bag
+go e
+look around
+attack high wizard
+look around
+go e
+look a
+grab torch
+use torch
+grab blood diamond
+quit
+no

@@ -1,0 +1,113 @@
+Enter your name please 
+Welcome your highness
+What is your class (warrior or fighter)? 
+
+
+Your name: Aubin
+Your class: warrior
+Your health: 200
+Your damage: 10
+
+type help for a list of all commands
+
+
+Command: grab bedpan
+a smelly metal bowl
+
+Command: use bedpan
+you just used bedpan in the King's bedroom
+you just spilled feces all over the place...you are a disgusting man, but a key dropped
+
+Command: grab key
+this might be useful for doing key things
+
+Command: go e
+Aubin, you are in the corridor
+
+Command: go s
+Aubin, you are in the lair
+
+Command: bag
+************************** 
+ You currently have in your bag:
+a(n) bedpan
+a(n) key
+************************** 
+ You currently have equipped:
+a(n) best shield as your shield
+a(n) water tower as your weapon
+
+Command: use key
+you just used key in the lair
+a door slides open and behind it is a CAVE! Nice find Aubin!
+
+Command: bag
+************************** 
+ You currently have in your bag:
+a(n) bedpan
+************************** 
+ You currently have equipped:
+a(n) best shield as your shield
+a(n) water tower as your weapon
+
+Command: go e
+Aubin, you are in the cave
+
+Command: look around
+this place: a bad aura lingers here
+************************** 
+
+torch
+water tower
+best shield
+prison is East
+lair is West
+Monster name: high wizard
+Monster health: 1869
+Monster damage: 1244
+
+Command: attack high wizard
+60200
+you just attacked high wizard with: water tower
+you have just killed high wizard
+you have found :
+a(n) crown
+	Description: a gold crown with many jewels
+
+a(n) vorpel sword
+	Description: a strange looking sword
+
+
+Command: look around
+this place: a bad aura lingers here
+************************** 
+
+torch
+water tower
+best shield
+prison is East
+lair is West
+
+Command: go e
+Aubin, you are in the prison
+
+Command: look a
+this place: the stench of blood is thick here, but where did it all go. Is that oil?
+************************** 
+
+torch
+lint
+cave is West
+
+Command: grab torch
+fire attatched to a stick
+
+Command: use torch
+you just used torch in the prison
+The prison bursts in flames, revealing a hidden gem! Nice find Aubin!
+
+Command: gYou chose to be a quitter
+[?1034h formed from vast amounts of blood and a fiery explosion
+
+Command: quit
+You are about to quit, type no to quit

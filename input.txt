@@ -1,0 +1,50 @@
+Aubin
+warrior
+help
+look around
+about crown
+about King's scepter
+about bedpan
+about broken shield
+about broken weapon
+grab vorpel sword
+grab crown
+grab bedpan
+look around
+bag
+use crown
+use crown
+use bedpan
+use bedpan
+look around
+about key
+grab key
+points
+go east
+look a
+grab torch
+about torch
+bag
+go s
+look a
+drop torch
+look a
+attack blob
+bag
+use crown
+go s
+attack dragon
+bag
+points
+go n
+go e
+use key
+look around
+go e
+attack high wizard
+go e
+grab torch
+use torch
+grab Blood Diamond
+quit
+no
