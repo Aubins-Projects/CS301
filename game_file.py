@@ -348,6 +348,11 @@ def unequip_command(holder):
       
 def bag_command(holder):
   if holder[0]=="bag":
+    import bag
+#    try:
+    bag.main()
+#    except:
+#      fakevarforpuprose=1
     i=0
     print("************************** \n You currently have in your bag:")
     for x in range(len(user.contents)):
