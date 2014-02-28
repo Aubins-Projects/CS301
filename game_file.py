@@ -23,18 +23,19 @@ so basically three classes more :D
 '''
 #these are the global variables for the system
 
+player=dict()
+player["points"]=0
+player["lives"]=3
+player["relive"]=1
+player["Hmultiplier"]=1
+player["Dmultiplier"]=1
+player["x"]=10
+player["y"]=10
 
-points=0
-lives=3
-relive=1
-contents={}
 response=""
 holder=list
-HnDmultiplier=[1,1]
-HnDmultiplier[0]=1
-HnDmultiplier[1]=1
 
-
+#
 #This is what lets you put your name in and then checks your score
 def namechecker():
   name=raw_input("Enter your name please \n")
@@ -49,29 +50,29 @@ def namechecker():
 
 
 #this is to initialize your character its commented out below for testing purposes
-def initial(name, HnDmultiplier):
+def initial(name, player):
   while True:
     answer2=raw_input("What is your class (warrior or fighter)? \n")
     if answer2 in ("warrior","fighter"):
       break
   answer3=100
-  user=player(name,answer3,answer2)
+  user=players(name,answer3,answer2)
   print("\n")
   print("Your name: "+str(user.name))
   print("Your class: "+str(user.classs))
-  HnDmultiplier=class_adaption(user.classs,HnDmultiplier)
-  print("Your health: "+str(int(user.health)*HnDmultiplier[0]))
-  print("Your damage: "+str(int(user.damage)*HnDmultiplier[1]))
+  player=class_adaption(user.classs,player)
+  print("Your health: "+str(int(user.health)*player["Hmultiplier"]))
+  print("Your damage: "+str(int(user.damage)*player["Dmultiplier"]))
   return user
 
-def class_adaption(classs,HnDmultiplier):
+def class_adaption(classs,player):
   if classs=="warrior":
-    HnDmultiplier[0]=2
-    HnDmultiplier[1]=1
+    player["Hmultiplier"]=2
+    player["Dmultiplier"]=1
   if classs=="fighter":
-    HnDmultiplier[0]=1
-    HnDmultiplier[1]=2
-  return HnDmultiplier
+    player["Hmultiplier"]=1
+    player["Dmultiplier"]=2
+  return player
 
 
 #This is for looking specifically at one thing
@@ -108,18 +109,18 @@ def room_contents_look(what):
 #This is the reassurance for trying to quit
 def ask_ok(prompt, retries=4, complaint='Yes or no, please!'):
   while True:
-    global relive
+    player["relive"]
     ok = raw_input( prompt + '\n')
     if ok in ('y', 'ye', 'yes'):
       print("you are alive once more!")
-      relive=1
+      player["relive"]=1
       return True
     if ok in ('n', 'no', 'nop', 'nope'):
       print("You chose to be a quitter")
       logfile = open("Highscores.txt", "a")
-      logfile.write(str(points)+"\t" + name+"\n")
+      logfile.write(str(player["points"])+"\t" + name+"\n")
       logfile.close()
-      relive=0
+      player["relive"]=0
       return False
     retries = retries - 1
     if retries < 0:
@@ -142,7 +143,7 @@ def item_randomer(thelist):
       return item
       break    
 def loot_size_randomer(monster,thelist):
-  randonum=random.randrange(2,4)
+  randonum=random.randrange(1,5)
   for num in range(0,randonum):
       monster.contents.append(item_randomer(thelist))
       
@@ -166,7 +167,7 @@ def scorecheck():
     print(logfile.readline())
   logfile.close()
   print("************************** \n")
-  print("The your score is: "+ str(points))
+  print("The your score is: "+ str(player["points"]))
   
 #These are generic deaths
 def crzy_death(how_they_died):
@@ -180,23 +181,21 @@ def gen_death(how_they_died):
 
 #this is your starting coordinates
     
-x=10
-y=10
+
 
 def coordinates(direction):
-  global x
-  global y
+
   global location
-  sav_x=x
-  sav_y=y
+  sav_x=player["x"]
+  sav_y=player["y"]
   if direction in ["east" , "e"]:
-     x=x+1
+     player["x"]=player["x"]+1
   elif direction in ["west" , "w"]:
-     x=x-1
+     player["x"]=player["x"]-1
   elif direction in ["north" , "n"]:
-     y=y+1
+     player["y"]=player["y"]+1
   elif direction in ["south" , "s"]:
-     y=y-1
+     player["y"]=player["y"]-1
   loc_finder(sav_x,sav_y)
 
 ###########################################################################################
@@ -204,17 +203,15 @@ def coordinates(direction):
 
 
 def loc_finder(sav_x,sav_y):
-  global x
-  global y
   global location
   check =0
   for room in level1.rooms:
-    if room.x==x and room.y==y:
+    if room.x==player["x"] and room.y==player["y"]:
       location= room
       check=1
   if check == 0:
-      x=sav_x
-      y=sav_y
+      player["x"]=sav_x
+      player["y"]=sav_y
   print(str(name)+", you are in the "+str(location))
 
 def map_finder(x,y):
@@ -223,12 +220,10 @@ def map_finder(x,y):
       return room
 
 def mapping():
-  global x
-  global y
   global location
   temp_location=location
-  temp_x=x
-  temp_y=y
+  temp_x=player["x"]
+  temp_y=player["y"]
 
   if not map_finder(temp_x-1,temp_y)==temp_location:
     location.west=map_finder(temp_x-1,temp_y)
@@ -267,8 +262,6 @@ def look_command(holder):
 def level_upper(monsterh,monsterd):
   global user
   totalpoints=monsterh+monsterd
-  print (str(int(monsterh)))
-  print (str(int(monsterd)))
   totalexp=totalpoints
   user.exp+=totalexp
   while user.exp > 500:
@@ -328,7 +321,7 @@ def equip_command(holder):
       elif user.contents[user.contents.index(otherholder)].equip == "weapon":
         user.weapon = user.contents[user.contents.index(otherholder)]
         user.contents.remove(otherholder)
-        print("you just equipped a(n) "+str(otherholder)+" which "+str(user.shield.description))
+        print("you just equipped a(n) "+str(otherholder)+" which "+str(user.weapon.description))
 
 def unequip_command(holder):
   if holder[0] in ["unequip", "un"]:
@@ -337,22 +330,17 @@ def unequip_command(holder):
     otherholder=' '.join(holder)     
     if otherholder == user.weapon:
         user.contents.append(user.weapon)
-        user.weapon=""
+        user.weapon=None
         print("you just took off a(n) "+str(otherholder))
     elif otherholder == user.shield:
         user.contents.append(user.shield)
-        user.shield=""
+        user.shield=None
         print("you just took off a(n) "+str(otherholder))
 
         
       
 def bag_command(holder):
   if holder[0]=="bag":
-    import bag
-#    try:
-    bag.main()
-#    except:
-#      fakevarforpuprose=1
     i=0
     print("************************** \n You currently have in your bag:")
     for x in range(len(user.contents)):
@@ -414,29 +402,37 @@ def help_command(holder):
 
       
 def attack_command(holder):
-  global response
-  global lives
-  global points
   if holder[0]=="attack":
     holder.remove("attack")
     otherholder=' '.join(holder)
     neitherdead=0
     if otherholder == location.baddies:
-      yourhealth=(int(user.health) + int(user.shield.power))*int(HnDmultiplier[0])*(user.level+100)/90
-      yourdamage=(int(user.weapon.power)+user.damage)*int(HnDmultiplier[1])*(user.level+100)/90
+      if user.shield!= None:
+        yourhealth=(int(user.health) + int(user.shield.power))*int(player["Hmultiplier"])*(user.level+100)/90
+      else:
+        yourhealth=(int(user.health))*int(player["Hmultiplier"])*(user.level+100)/90
+      if user.weapon!= None:
+        yourdamage=(int(user.weapon.power)+user.damage)*int(player["Dmultiplier"])*(user.level+100)/90
+      else:
+        yourdamage=(user.damage)*int(player["Dmultiplier"])*(user.level+100)/90
       monsterdamage=int(location.baddies.damage)
       monsterhealth=int(location.baddies.health)
     while neitherdead==0:
       monsterhealth=monsterhealth-yourdamage
-      print("you just attacked "+str(location.baddies.name) +" with: "+ str(user.weapon.name))
+      if user.weapon!= None: 
+        print("you just attacked "+str(location.baddies.name) +" with: "+ str(user.weapon.name))
+      else:
+        print("you just attacked "+str(location.baddies.name) +" with: your mighty fists")
       if monsterhealth<1:
         print("you have just killed "+str(location.baddies.name))
+        
+        player["points"]=player["points"]+int(location.baddies.health)
+        level_upper(int(location.baddies.health),int(location.baddies.damage))
         print("you have found :")
-        points=points+int(location.baddies.health)
-        level_upper(int(location.baddies.health),int(location.baddies.damage))   
         for item in location.baddies.contents:
           if item==None:
             break
+          
           print("a(n) "+str(item))
           print("\tDescription: "+str(item.description)+"\n")
           user.contents.append(item)
@@ -446,11 +442,11 @@ def attack_command(holder):
       print(str(location.baddies.name)+" just attacked you for: "+str(monsterdamage))
       if yourhealth<1:
         print("you have just been killed by "+str(location.baddies.name))
-        lives=lives-1
-        if lives<0:
+        player["lives"]=player["lives"]-1
+        if player["lives"]<0:
           response="dfhsergghj"
           break
-        print("you only have: "+str(lives)+" lives/life left")
+        print("you only have: "+str(player["lives"])+" lives/life left")
         break
       print("Your HP: "+str(int(yourhealth)))
       print(str(location.baddies.name)+"'s HP " +str(int(monsterhealth)))
@@ -486,8 +482,8 @@ class Object:
     self.uid=int(uid)
     self.usable=usable
     self.world=world
-    self.x=x
-    self.y=y
+    self.x=300000
+    self.y=300000
     self.atloc=atloc
     self.destroy=destroy
 
@@ -584,7 +580,7 @@ common.items.append(lint)
 
 
 #This a player/your player called the user in the code  
-class player:
+class players:
   def __init__(self,name,health,classs,exp=0,level=1):
     self.name=name
     self.health=health
@@ -592,8 +588,8 @@ class player:
     self.exp=exp
     self.contents=list()
     self.damage=10 
-    self.shield=""
-    self.weapon=""
+    self.shield=None
+    self.weapon=None
     self.level=level
   def __str__(self):
     return str(self.name)
@@ -605,7 +601,7 @@ class player:
 
 
 name=namechecker()
-user=initial(name,HnDmultiplier)
+user=initial(name,player)
 
 
 
@@ -797,8 +793,8 @@ location= bedroom
 
 
 
-user.shield=broken_shield
-user.weapon=broken_weapon
+#user.shield=broken_shield
+#user.weapon=broken_weapon
 #This is really the only executed code for the whole game, its long because of the quitting functionality
 #You can only save your score if you quit properly
 #that means typing the word quit and then no
@@ -811,7 +807,7 @@ while not response  == "dfhsergghj":
   response=raw_input("\nCommand: \n")
   if response == "quit":
     ask_ok("You are about to quit, type no to quit")
-    if relive==0:
+    if player["relive"]==0:
       response="dfhsergghj"
 #  try:
   holder=(response.split())
