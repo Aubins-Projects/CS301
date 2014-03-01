@@ -12,16 +12,21 @@ def main(thingsInBag):
 
   #create a game screen
   screen = pygame.display.set_mode((1280,720), 0, 12)
+  if len(thingsInBag)<16:
+    scaledsz=150
+  else:
+    scaledsz=100
+
   x=100
   y=200
+
   TheItemsLoc=dict()
   for item in thingsInBag:
-    generic=list()
     key=str(item)
-    x+=110
+    x+=scaledsz+10
     if x>1000:
-      x=210
-      y+=110
+      x=110+scaledsz
+      y+=scaledsz+10
     TheItemsLoc[key]=[x,y]
   
 
@@ -36,7 +41,7 @@ def main(thingsInBag):
       value=pygame.image.load(str(item)+".png")
     except:
       value=pygame.image.load("noImg.png")
-    value=pygame.transform.smoothscale(value,(100,100))
+    value=pygame.transform.smoothscale(value,(scaledsz,scaledsz))
     loadedImg[key]=value
 
 

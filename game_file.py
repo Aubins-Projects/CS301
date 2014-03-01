@@ -294,6 +294,11 @@ def grab_command(holder):
   if holder[0]=="grab":
     holder.remove("grab")
     otherholder=' '.join(holder) 
+    if otherholder == "all":
+      for item in location.contents:
+        user.contents.append(item)
+        location.contents.remove(item)
+        print("You just picked up something that/is: "+user.contents[user.contents.index(item)].description)
     if otherholder in location.contents:
       user.contents.append(location.contents[location.contents.index(otherholder)])
       location.contents.remove(otherholder)
@@ -352,6 +357,11 @@ def drop_command(holder):
     temp_word_holder=str(holder[0])
     holder.remove(temp_word_holder)
     otherholder=' '.join(holder)
+    if otherholder == "all":
+      for item in user.contents:
+        location.contents.append(item)
+        user.contents.remove(item)
+        print("you just dropped "+ str(item) + " in the " +str(location))
     if otherholder in user.contents:
       location.contents.append(user.contents[user.contents.index(otherholder)])
       user.contents.remove(otherholder)
@@ -568,8 +578,8 @@ common.items.append(Object("credit card", 1, "fire attached to a stick",78,5))
 common.items.append(Object("old movie",20,"will mitigate some damage",300,6))
 common.items.append(Object("paper shield",10,"will mitigate some damage",300,7, "shield"))
 common.items.append(Object("paper weapon",10,"will cause some damage",300,8, "weapon"))
-common.items.append(Object("skull", 15, "a giant blob skull",100,9))
-common.items.append(Object("talon", 15, "a giant dragon talon",100,10))
+common.items.append(skull)
+common.items.append(talon)
 common.items.append(lint)
 
 
@@ -801,10 +811,11 @@ user.contents.append(broken_shield)
 user.contents.append(broken_weapon)
 user.contents.append(perfect_w)
 user.contents.append(perfect_s)
-user.contents.append(ball)
 
-#user.shield=broken_shield
-#user.weapon=broken_weapon
+
+user.shield=broken_shield
+user.weapon=broken_weapon
+
 #This is really the only executed code for the whole game, its long because of the quitting functionality
 #You can only save your score if you quit properly
 #that means typing the word quit and then no
