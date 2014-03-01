@@ -276,11 +276,6 @@ def level_upper(monsterh,monsterd):
 
 def about_command(holder):
   if holder[0]=="about":
-    import game
-    try:
-      game.main()
-    except:
-      fakevarforpuprose=1
     if location.baddies:
       if holder[1]==location.baddies.name:
         print("Monster name: "+str(location.baddies.name))
@@ -341,6 +336,8 @@ def unequip_command(holder):
       
 def bag_command(holder):
   if holder[0]=="bag":
+    import bag
+    bag.main(user.contents)
     i=0
     print("************************** \n You currently have in your bag:")
     for x in range(len(user.contents)):
@@ -507,6 +504,7 @@ class itemlist:
 #world ITEMS
 
 crown = Object("crown", 15000, "a gold crown with many jewels",10,1)
+ball = Object("ball", 1500, "a ball that looks like a pong ball",10,1)
 crown.usable="yes"
 scepter =Object("King's scepter", 10000, "a silver sceptre",30,2)
 vorpel_sword=Object("vorpel sword", 200, "a strange looking sword",1000,3)
@@ -791,7 +789,19 @@ print("\ntype help for a list of all commands\n")
 location= bedroom
 
 
+#to test bag functionality
 
+user.contents.append(crown)
+user.contents.append(scepter)
+user.contents.append(vorpel_sword)
+user.contents.append(bedpan)
+user.contents.append(torch)
+user.contents.append(shield)
+user.contents.append(broken_shield)
+user.contents.append(broken_weapon)
+user.contents.append(perfect_w)
+user.contents.append(perfect_s)
+user.contents.append(ball)
 
 #user.shield=broken_shield
 #user.weapon=broken_weapon
