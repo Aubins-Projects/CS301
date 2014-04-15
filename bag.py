@@ -47,6 +47,7 @@ def main(thingsInBag):
 
   try:
     while True:
+      
       for event in pygame.event.get():
         screen.blit(background,(0,0))
         for item in thingsInBag:
@@ -54,7 +55,7 @@ def main(thingsInBag):
           x=listof[0]
           y=listof[1]
           screen.blit(loadedImg[str(item)],(x,y))
-        
+
 
         if event.type == QUIT:
           pygame.quit()        

@@ -443,7 +443,7 @@ def attack_command(holder):
           print("a(n) "+str(item))
           print("\tDescription: "+str(item.description)+"\n")
           user.contents.append(item)
-        location.baddies=None
+        #location.baddies=None
         break
       yourhealth=yourhealth-monsterdamage
       print(str(location.baddies.name)+" just attacked you for: "+str(monsterdamage))
@@ -512,20 +512,20 @@ class itemlist:
 
 ############################################################################################################
 #world ITEMS
-
+# name, value, description, power,uid, equip="item",atloc='',usable="no",world="no",destroy="no" 
 crown = Object("crown", 15000, "a gold crown with many jewels",10,1)
-ball = Object("ball", 1500, "a ball that looks like a pong ball",10,1)
+ball = Object("ball", 1500, "a ball that looks like a pong ball",10,2)
 crown.usable="yes"
-scepter =Object("King's scepter", 10000, "a silver sceptre",30,2)
-vorpel_sword=Object("vorpel sword", 200, "a strange looking sword",1000,3)
-kbedpan=Object("bedpan", 3, "a smelly metal bowl",2,4)
+scepter =Object("King's scepter", 10000, "a silver sceptre",30,3)
+vorpel_sword=Object("vorpel sword", 200, "a strange looking sword",1000,4)
+kbedpan=Object("bedpan", 3, "a smelly metal bowl",2,5)
 kbedpan.usable="yes"
-bedpan=Object("bedpan", 3, "a smelly metal bowl",2,4)
-torch=Object("torch", 1, "fire attatched to a stick",78,5)
+bedpan=Object("bedpan", 3, "a smelly metal bowl",2,6)
+torch=Object("torch", 1, "fire attatched to a stick",78,7)
 torch.usable="yes"
-shield=Object("shield",200,"will mitigate some damage",300,6)
-broken_shield=Object("broken shield",100,"will mitigate some damage",300,8, "shield")
-broken_weapon=Object("broken weapon",100,"will cause some damage",300,9, "weapon")
+shield=Object("shield",200,"will mitigate some damage",300,8)
+broken_shield=Object("broken shield",100,"will mitigate some damage",300,9, "shield")
+broken_weapon=Object("broken weapon",100,"will cause some damage",300,16, "weapon")
 perfect_w=Object("water tower",10000,"will mitigate some damage",30000,10, "weapon")
 perfect_s=Object("best shield",10000,"will mitigate some damage",30000,11, "shield")
 skull=Object("skull", 15000, "a giant skull",100,12)
@@ -534,8 +534,18 @@ lint=Object("lint", 100, "a piece of lint",100,14)
 key=Object("key",1200,"this might be useful for doing key things",12,15)
 key.usable="yes"
 key.destroy="yes"
-blooddiamond=Object("Blood Diamond",150000,"a blood diamond, formed from vast amounts of blood and a fiery explosion", 20,1)
+blooddiamond=Object("Blood Diamond",150000,"a blood diamond, formed from vast amounts of blood and a fiery explosion", 20,17)
+paper_weapon=Object("paper weapon",10,"will cause some damage",300,18, "weapon")
+scrap_metal=Object("scrap metal", 150, "a gold crown with many jewels",10,19)
+credit_card=Object("credit card", 1, "this seems out of place",78,20)
+paper_shield=Object("paper shield",10,"will mitigate some damage",300,21, "shield")
+old_movie=Object("old movie",20,"looks like pokemon 1",300,22)
+juice_box=Object("juice box", 3, "probably not good anymore",2,23)
+plate=Object("plate", 20, "appears to be able to hold things on its surface",1000,24)
+dead_mouse=Object("dead mouse", 100, "pretty sure you should not keep this",30,25)
 
+
+# name, value, description, power,uid, equip="item",atloc='',usable="no",world="no",destroy="no"
 ##################################################################################################################    
     
     
@@ -551,14 +561,12 @@ uncommon.items.append(scepter)
 uncommon.items.append(vorpel_sword)
 uncommon.items.append(bedpan)
 uncommon.items.append(torch)
-uncommon.items.append(Object("shield",200,"will mitigate some damage",300,6))
-uncommon.items.append(Object("broken shield",100,"will mitigate some damage",300,8, "shield"))
-uncommon.items.append(Object("broken weapon",100,"will cause some damage",300,9, "weapon"))
-uncommon.items.append(Object("water tower",10000,"will mitigate some damage",30000,10, "weapon"))
-uncommon.items.append(Object("best shield",10000,"will mitigate some damage",30000,11, "shield"))
-uncommon.items.append(Object("skull", 15000, "a giant blob skull",100,12))
-uncommon.items.append(Object("talon", 1500, "a giant dragon talon",100,13))
-uncommon.items.append(Object("lint", 100, "a piece of lint",100,14))
+uncommon.items.append(shield)
+uncommon.items.append(perfect_w)
+uncommon.items.append(perfect_s)
+uncommon.items.append(skull)
+uncommon.items.append(talon)
+uncommon.items.append(lint)
 
 
 
@@ -570,14 +578,13 @@ uncommon.items.append(Object("lint", 100, "a piece of lint",100,14))
 #COMMON ITEMS
 
 common= itemlist("common")
-common.items.append(Object("scrap metal", 150, "a gold crown with many jewels",10,1))
-common.items.append(Object("dead mouse", 100, "a silver sceptre",30,2))
-common.items.append(Object("plate", 20, "a strange looking sword",1000,3))
-common.items.append(Object("juice box", 3, "a smelly metal bowl",2,4))
-common.items.append(Object("credit card", 1, "fire attached to a stick",78,5))
-common.items.append(Object("old movie",20,"will mitigate some damage",300,6))
-common.items.append(Object("paper shield",10,"will mitigate some damage",300,7, "shield"))
-common.items.append(Object("paper weapon",10,"will cause some damage",300,8, "weapon"))
+common.items.append(dead_mouse)
+common.items.append(plate)
+common.items.append(juice_box)
+common.items.append(paper_shield)
+common.items.append(old_movie)
+common.items.append(credit_card)
+common.items.append(paper_weapon)
 common.items.append(skull)
 common.items.append(talon)
 common.items.append(lint)
@@ -751,7 +758,12 @@ prison.x=13
 prison.y=9
 
 
-
+room1=Room("Average Room")
+room1.description="This is just a regular room, nothing special here"
+room1.contents.append(paper_weapon)
+room1.baddies=blob
+room1.x=12
+room1.y=10
 
 
 
@@ -772,7 +784,7 @@ level1.rooms.append(hallway)
 level1.rooms.append(keep)
 level1.rooms.append(cave)
 level1.rooms.append(prison)
-
+level1.rooms.append(room1)
 
 
 #These are all of the commands in the game
@@ -804,7 +816,6 @@ location= bedroom
 user.contents.append(crown)
 user.contents.append(scepter)
 user.contents.append(vorpel_sword)
-user.contents.append(bedpan)
 user.contents.append(torch)
 user.contents.append(shield)
 user.contents.append(broken_shield)
