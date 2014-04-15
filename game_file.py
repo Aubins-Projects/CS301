@@ -213,6 +213,8 @@ def loc_finder(sav_x,sav_y):
       player["x"]=sav_x
       player["y"]=sav_y
   print(str(name)+", you are in the "+str(location))
+  location.visitedFun()
+  print location.visited
 
 def map_finder(x,y):
   for room in level1.rooms:
@@ -695,8 +697,11 @@ class Room:
     self.usables=list()
     self.x=0
     self.y=0
+    self.visited=False
   def __str__(self):
     return str(self.name)
+  def visitedFun(self):
+    self.visited=True
 ############################################################################################################
 #Add rooms Below don't forget them to the
 
@@ -764,9 +769,6 @@ room1.contents.append(paper_weapon)
 room1.baddies=blob
 room1.x=12
 room1.y=10
-
-
-
 
 
 class floor:
