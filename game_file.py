@@ -15,6 +15,7 @@ player["Dmultiplier"]=1
 player["x"]=10
 player["y"]=10
 
+
 response=""
 holder=list
 
@@ -165,14 +166,7 @@ def scorecheck():
   print("************************** \n")
   print("The your score is: "+ str(player["points"]))
   
-#These are generic deaths
-def crzy_death(how_they_died):
-  crazy_death= (name + ", because you decided to "+ how_they_died +" you have incured the wrath of Om' Alde Ashko and he has smited your SOUL!")
-  return str(crazy_death)
 
-def gen_death(how_they_died):
-  gen_death= (name + ", because you decided to "+ how_they_died +" you have incured the wrath of Om' Alde Ashko and he has smited your SOUL!")
-  return str(gen_death)
 
 
 #this is your starting coordinates
@@ -306,6 +300,7 @@ def grab_command(holder):
 def unlocked_rooms(item,loc):
   loc.x=item.x
   loc.y=item.y
+  print "A room was just unlocked!"
 
 def equip_command(holder):
   if holder[0]in ["equip","e"]:
@@ -375,7 +370,7 @@ def use_command(holder):
       if (user.contents[user.contents.index(otherholder)].usable=="yes"):
         location.used.append(user.contents[user.contents.index(otherholder)])
         print("you just used "+ otherholder + " in the " +str(location))
-        if otherholder in location.usables:
+        if otherholder in location.usables or location.key.name==user.contents[user.contents.index("key")].name:
          cause_and_effect(otherholder)
       else:
         print(str(user.contents[user.contents.index(otherholder)])+" is not usable.")
@@ -383,13 +378,14 @@ def use_command(holder):
 
 def cause_and_effect(otherholder):
   global location
-  print(location.usables[location.usables.index(otherholder)].effect)
+  if location.usables[location.usables.index(otherholder)].effect!="":
+    print location.usables[location.usables.index(otherholder)].effect
   if (len(location.usables[location.usables.index(otherholder)].changer)>0):
     for item in location.usables[location.usables.index(otherholder)].changer:
       location.contents.append(item)
       location.usables[location.usables.index(otherholder)].changer.remove(item)
-  if (user.contents[user.contents.index(otherholder)].world=="yes"):
-    unlocked_rooms(user.contents[user.contents.index(otherholder)],user.contents[user.contents.index(otherholder)].atloc)
+  if (location.usables[location.usables.index(otherholder)].world=="yes"):
+    unlocked_rooms(location.usables[location.usables.index(otherholder)],location.usables[location.usables.index(otherholder)].atloc)
     if (user.contents[user.contents.index(otherholder)].destroy=="yes"):
         user.contents.remove(otherholder)
 
@@ -491,6 +487,8 @@ class Object:
     self.y=300000
     self.atloc=atloc
     self.destroy=destroy
+    self.effect=""
+    self.changer=list()
 
   def __str__(self):
     return str(self.name)
@@ -715,6 +713,7 @@ class Room:
     self.y=0
     self.visited=False
     self.start_up()
+    self.key=lint
   def __str__(self):
     return str(self.name)
   def visitedFun(self):
@@ -725,6 +724,13 @@ class Room:
       self.baddies=copy.deepcopy(random.choice(MonsterList))
       self.baddies.healthy()
       self.baddies.looter()
+  def makekey(self,x,y,atloc,world):
+    self.key=copy.deepcopy(key)
+    self.key.x=x
+    self.key.y=y
+    self.key.atloc=atloc
+    self.key.world=world   
+    self.usables.append(self.key)
 ############################################################################################################
 #Add rooms Below
 
@@ -732,6 +738,7 @@ castle_entrance=Room("The Castle Entrance")
 castle_entrance.description="the starting place of the dungeon"
 castle_entrance.x=10
 castle_entrance.y=10
+castle_entrance.contents.append(key)
 
 cell1=Room("Prison Cell")
 cell1.description="just your average cell"
@@ -820,14 +827,12 @@ room2.x=11
 room2.y=7
 
 
-room20=Room("Room")
+room20=Room("Secret Room")
 room20.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
 room20.x=600
 room20.y=600
-key.world="yes"
-key.x=11
-key.y=13
-key.atloc=room20
+room1.makekey(10,13,room20,"yes")
+
 
 room3=Room("Room")
 room3.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
@@ -873,11 +878,21 @@ treasureRoom1=Room("Treasure Room")
 treasureRoom1.description="Contains a vast amount of treasure"
 treasureRoom1.x=900
 treasureRoom1.y=1700
-key.world="yes"
-key.x=9
-key.y=17
-key.atloc=treasureRoom1
+cell3.makekey(9,17,treasureRoom1,"yes")
 
+
+cave1=Room("Cave")
+cave1.description=("Seems pretty damp")
+cave1.x=10
+cave1.y=14
+
+prison1=Room("Prison")
+prison1.description=("Seems pretty cramped")
+prison1.x=10
+prison1.y=15
+
+
+user.contents.append(key)
 
 '''
 
