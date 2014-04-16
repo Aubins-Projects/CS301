@@ -281,7 +281,6 @@ def level_upper(monsterh,monsterd):
   totalpoints=monsterh+monsterd
   totalexp=totalpoints
   user.exp+=totalexp
-
   while user.exp > 500:
     user.exp-=500
     user.level+=1
@@ -289,7 +288,9 @@ def level_upper(monsterh,monsterd):
     print("*******************")
     print("you just leveled up to: "+str(user.level))
     print("*******************")
-
+  for r in level1.rooms:
+    if r.baddies!=None:
+      r.baddies.healthy()
 
 
 def about_command(holder):
@@ -667,10 +668,7 @@ class monster:
       MonsterList.append(self)
   def healthy(self):
     self.health=random.randint(100,200)*(user.level+random.randint(2,5))
-    self.damage=random.randint(50,150)*(user.level+random.randint(0,5))
-    print "entered the healthy loop"
-    print self.health
-    print self.damage
+    self.damage=random.randint(0,40)*(user.level+random.randint(0,5))
 
 ######################################################################################################################
 #Add monsters below
