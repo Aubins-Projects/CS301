@@ -462,7 +462,7 @@ def attack_command(holder):
           print("a(n) "+str(item))
           print("\tDescription: "+str(item.description)+"\n")
           user.contents.append(item)
-        #location.baddies=None
+        location.baddies=None
         break
       yourhealth=yourhealth-monsterdamage
       print(str(location.baddies.name)+" just attacked you for: "+str(monsterdamage))
@@ -837,9 +837,6 @@ room2=Room("Room")
 room2.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
 room2.x=11
 room2.y=7
-
-
-
 
 
 room20=Room("Room")
