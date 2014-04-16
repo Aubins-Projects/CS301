@@ -970,8 +970,7 @@ print("\ntype help for a list of all commands\n")
 
 #Starting location:
 location= castle_entrance
-
-
+castle_entrance.visitedFun()
 #to test bag functionality
 
 user.shield=broken_shield
