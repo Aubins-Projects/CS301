@@ -266,6 +266,7 @@ def level_upper(monsterh,monsterd):
   totalpoints=monsterh+monsterd
   totalexp=totalpoints
   user.exp+=totalexp
+
   while user.exp > 500:
     user.exp-=500
     user.level+=1
@@ -680,7 +681,16 @@ bedpan_massacre.changer.append(key)
 key_use = cause_n_effect("key", "a door slides open and behind it is a CAVE! Nice find "+str(name)+"!")
 fire_spolde= cause_n_effect("torch", "The prison bursts in flames, revealing a hidden gem! Nice find "+str(name)+"!")
 fire_spolde.changer.append(blooddiamond)
+#############################################################################################################
+class floor:
+  def __init__(self,name,rooms=list()):
+    self.name=name
+    self.rooms=rooms
+  def __str__(self):
+    return str(self.name)
 
+############################################################################################################
+level1= floor("ground level")
 
 #Your room object
 class Room:
@@ -698,14 +708,154 @@ class Room:
     self.x=0
     self.y=0
     self.visited=False
+    self.start_up()
   def __str__(self):
     return str(self.name)
   def visitedFun(self):
     self.visited=True
+  def start_up(self):
+    level1.rooms.append(self)
 ############################################################################################################
-#Add rooms Below don't forget them to the
+#Add rooms Below
+
+castle_entrance=Room("The Castle Entrance")
+castle_entrance.description="the starting place of the dungeon"
+castle_entrance.x=10
+castle_entrance.y=10
+
+cell1=Room("Prison Cell")
+cell1.description="just your average cell"
+cell1.x=10
+cell1.y=16
+
+cell2=Room("Prison Cell")
+cell2.description="just your average cell"
+cell2.x=9
+cell2.y=15
+
+cell3=Room("Prison Cell")
+cell3.description="just your average cell"
+cell3.x=9
+cell3.y=16
+
+hallway1=Room("Hallway")
+hallway1.description="links other rooms, and may contain a torch or two"
+hallway1.x=11
+hallway1.y=8
+
+hallway2=Room("Hallway")
+hallway2.description="links other rooms, and may contain a torch or two"
+hallway2.x=11
+
+hallway2.y=9
+
+hallway3=Room("Hallway")
+hallway3.description="links other rooms, and may contain a torch or two"
+hallway3.x=11
+hallway3.y=10
+
+hallway4=Room("Hallway")
+hallway4.description="links other rooms, and may contain a torch or two"
+hallway4.x=11
+hallway4.y=11
+
+hallway5=Room("Hallway")
+hallway5.description="links other rooms, and may contain a torch or two"
+hallway5.x=11
+hallway5.y=12
+
+hallway6=Room("Hallway")
+hallway6.description="links other rooms, and may contain a torch or two"
+hallway6.x=12
+hallway6.y=10
+
+hallway7=Room("Hallway")
+hallway7.description="links other rooms, and may contain a torch or two"
+hallway7.x=13
+hallway7.y=10
+
+hallway8=Room("Hallway")
+hallway8.description="links other rooms, and may contain a torch or two"
+hallway8.x=14
+hallway8.y=8
+
+hallway9=Room("Hallway")
+hallway9.description="links other rooms, and may contain a torch or two"
+hallway9.x=14
+hallway9.y=9
+
+hallway10=Room("Hallway")
+hallway10.description="links other rooms, and may contain a torch or two"
+hallway10.x=14
+hallway10.y=10
+
+hallway11=Room("Hallway")
+hallway11.description="links other rooms, and may contain a torch or two"
+hallway11.x=14
+hallway11.y=11
+
+hallway12=Room("Hallway")
+hallway12.description="links other rooms, and may contain a torch or two"
+hallway12.x=14
+hallway12.y=12
+
+room1=Room("Room")
+room1.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
+room1.x=11
+room1.y=13
 
 
+room2=Room("Room")
+room2.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
+room2.x=600
+room2.y=600
+key.world="yes"
+key.x=10
+key.y=13
+key.atloc=room2
+
+room3=Room("Room")
+room3.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
+room3.x=12
+room3.y=9
+
+room4=Room("Room")
+room4.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
+room4.x=12
+room4.y=11
+
+room5=Room("Room")
+room5.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
+room5.x=13
+room5.y=7
+
+room6=Room("Room")
+room6.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
+room6.x=14
+room6.y=6
+
+room7=Room("Room")
+room7.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
+room7.x=15
+room7.y=7
+
+room8=Room("Room")
+room8.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
+room8.x=13
+room8.y=12
+
+room9=Room("Room")
+room9.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
+room9.x=14
+room9.y=13
+
+room10=Room("Room")
+room10.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
+room10.x=15
+room10.y=12
+
+
+'''
 
 bedroom = Room("King\'s bedroom")
 bedroom.description="This is a room fit for a King"
@@ -719,26 +869,6 @@ bedroom.usables.append(crown_explosion)
 bedroom.usables.append(bedpan_massacre)
 bedroom.x=10
 bedroom.y=10
-
-hallway=Room("corridor")
-hallway.description="just a long hallway"
-hallway.contents.append(torch)
-hallway.x=11
-hallway.y=10
-
-lair=Room("lair")
-lair.description="just a long hallway, but wait is that a key hole?"
-lair.contents.append(torch)
-lair.baddies=blob
-lair.usables.append(key_use)
-lair.x=11
-lair.y=9
-
-keep=Room("keep")
-keep.description="Large room, could probably hold a dragon"
-keep.baddies=dragon
-keep.x=11
-keep.y=8
 
 cave=Room("cave")
 cave.description="a bad aura lingers here"
@@ -761,32 +891,14 @@ prison.contents.append(lint)
 prison.usables.append(fire_spolde)
 prison.x=13
 prison.y=9
+'''
 
 
-room1=Room("Average Room")
-room1.description="This is just a regular room, nothing special here"
-room1.contents.append(paper_weapon)
-room1.baddies=blob
-room1.x=12
-room1.y=10
 
 
-class floor:
-  def __init__(self,name,rooms=list()):
-    self.name=name
-    self.rooms=rooms
-  def __str__(self):
-    return str(self.name)
 
-############################################################################################################
-level1= floor("ground level")
-level1.rooms.append(lair)
-level1.rooms.append(bedroom)
-level1.rooms.append(hallway)
-level1.rooms.append(keep)
-level1.rooms.append(cave)
-level1.rooms.append(prison)
-level1.rooms.append(room1)
+
+
 
 
 #These are all of the commands in the game
@@ -810,7 +922,7 @@ print("\ntype help for a list of all commands\n")
 
 
 #Starting location:
-location= bedroom
+location= castle_entrance
 
 
 #to test bag functionality
