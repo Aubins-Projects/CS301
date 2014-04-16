@@ -3,24 +3,7 @@ import string
 import random
 import copy
 
-'''
-How you can make this your own game:
 
-DO NOT MESS WITH THE FUNCTIONS other than location
-DO NOT MESS WITH THE CLASSES
-
-you can add objects by just following the format. If it is a shield/weapon, make sure you say so in the equip spot
-
-you can add monsters by following the format, just make sure you say where it is from by putting the [room].baddies
-
-you can add a room by adding the rooms to the room object and the floor object
-
-New idea make common, uncommon, good, and rare items that are based off a pool and the enemies can have on
-them by chance and randomness
-
-so basically three classes more :D
-
-'''
 #these are the global variables for the system
 
 player=dict()
@@ -41,9 +24,6 @@ def namechecker():
   name=raw_input("Enter your name please \n")
   if name in ('Aubin','aubin'):
     print("Welcome your highness")
-  elif name in ('K','k', 'carolina', 'Carolina'):
-    print("Oh...its you, well you can still play me I guess...")
-    name="Smelly"
   else:
     print("Welcome: "+name +"\nGood Luck! \n")
   return name
@@ -499,13 +479,12 @@ def what_you_do(holder):
 
 #Your items found in game
 class Object:
-  def __init__(self, name, value, description, power,uid, equip="item",atloc='',usable="no",world="no",destroy="no"):
+  def __init__(self, name, value, description, power, equip="item",atloc='',usable="no",world="no",destroy="no"):
     self.name=name
     self.value=value
     self.description=description
     self.power=power
     self.equip=equip
-    self.uid=int(uid)
     self.usable=usable
     self.world=world
     self.x=300000
@@ -532,36 +511,36 @@ class itemlist:
 ############################################################################################################
 #world ITEMS
 # name, value, description, power,uid, equip="item",atloc='',usable="no",world="no",destroy="no" 
-crown = Object("crown", 15000, "a gold crown with many jewels",10,1)
-ball = Object("ball", 1500, "a ball that looks like a pong ball",10,2)
+crown = Object("crown", 15000, "a gold crown with many jewels",10)
+ball = Object("ball", 1500, "a ball that looks like a pong ball",10)
 crown.usable="yes"
-scepter =Object("King's scepter", 10000, "a silver sceptre",30,3)
-vorpel_sword=Object("vorpel sword", 200, "a strange looking sword",1000,4)
-kbedpan=Object("bedpan", 3, "a smelly metal bowl",2,5)
+scepter =Object("King's scepter", 10000, "a silver sceptre",30)
+vorpel_sword=Object("vorpel sword", 200, "a strange looking sword",1000)
+kbedpan=Object("bedpan", 3, "a smelly metal bowl",2)
 kbedpan.usable="yes"
-bedpan=Object("bedpan", 3, "a smelly metal bowl",2,6)
-torch=Object("torch", 1, "fire attatched to a stick",78,7)
+bedpan=Object("bedpan", 3, "a smelly metal bowl",2)
+torch=Object("torch", 1, "fire attatched to a stick",78)
 torch.usable="yes"
-shield=Object("shield",200,"will mitigate some damage",300,8)
-broken_shield=Object("broken shield",100,"will mitigate some damage",300,9, "shield")
-broken_weapon=Object("broken weapon",100,"will cause some damage",300,16, "weapon")
-perfect_w=Object("water tower",10000,"will mitigate some damage",30000,10, "weapon")
-perfect_s=Object("best shield",10000,"will mitigate some damage",30000,11, "shield")
-skull=Object("skull", 15000, "a giant skull",100,12)
-talon=Object("talon", 1500, "a giant talon",100,13)
-lint=Object("lint", 100, "a piece of lint",100,14)
-key=Object("key",1200,"this might be useful for doing key things",12,15)
+shield=Object("shield",200,"will mitigate some damage",300)
+broken_shield=Object("broken shield",100,"will mitigate some damage",300, "shield")
+broken_weapon=Object("broken weapon",100,"will cause some damage",300, "weapon")
+perfect_w=Object("best weapon",10000,"will deal massive damage",30000, "weapon")
+perfect_s=Object("best shield",10000,"will mitigate massive damage",30000, "shield")
+skull=Object("skull", 15000, "a giant skull",100)
+talon=Object("talon", 1500, "a giant talon",100)
+lint=Object("lint", 100, "a piece of lint",100)
+key=Object("key",1200,"this might be useful for doing key things",12)
 key.usable="yes"
 key.destroy="yes"
-blooddiamond=Object("Blood Diamond",150000,"a blood diamond, formed from vast amounts of blood and a fiery explosion", 20,17)
-paper_weapon=Object("paper weapon",10,"will cause some damage",300,18, "weapon")
-scrap_metal=Object("scrap metal", 150, "a gold crown with many jewels",10,19)
-credit_card=Object("credit card", 1, "this seems out of place",78,20)
-paper_shield=Object("paper shield",10,"will mitigate some damage",300,21, "shield")
-old_movie=Object("old movie",20,"looks like pokemon 1",300,22)
-juice_box=Object("juice box", 3, "probably not good anymore",2,23)
-plate=Object("plate", 20, "appears to be able to hold things on its surface",1000,24)
-dead_mouse=Object("dead mouse", 100, "pretty sure you should not keep this",30,25)
+blooddiamond=Object("Blood Diamond",150000,"a blood diamond, formed from vast amounts of blood and a fiery explosion", 20)
+paper_weapon=Object("paper weapon",10,"will cause some damage",300, "weapon")
+scrap_metal=Object("scrap metal", 150, "a gold crown with many jewels",10)
+credit_card=Object("credit card", 1, "this seems out of place",78)
+paper_shield=Object("paper shield",10,"will mitigate some damage",300, "shield")
+old_movie=Object("old movie",20,"looks like pokemon 1",300)
+juice_box=Object("juice box", 3, "probably not good anymore",2)
+plate=Object("plate", 20, "appears to be able to hold things on its surface",1000)
+dead_mouse=Object("dead mouse", 100, "pretty sure you should not keep this",30)
 
 
 # name, value, description, power,uid, equip="item",atloc='',usable="no",world="no",destroy="no"
@@ -649,7 +628,7 @@ MonsterList=list()
 
 #These are the monsters in game
 class monster:
-  def __init__(self,name,color,classs):
+  def __init__(self,name,color,classs,lootTable=common):
     self.name=name
     self.health=0
     self.color=color
@@ -659,6 +638,7 @@ class monster:
     self.keys=""
     self.starter() 
     self.healthy()
+    self.lootTable=lootTable
   def __str__(self):
     return str(self.name)
   def __eq__(self,other):
@@ -669,18 +649,18 @@ class monster:
   def healthy(self):
     self.health=random.randint(100,200)*(user.level+random.randint(2,5))
     self.damage=random.randint(0,40)*(user.level+random.randint(0,5))
+  def looter(self):
+    for i in range(random.randint(1,4)):
+      self.contents.append(random.choice(self.lootTable.items))
 
 ######################################################################################################################
 #Add monsters below
 
-blob=monster("blob","yellow","warrior" )
-loot_size_randomer(blob,common)
+blob=monster("blob","yellow","warrior")
 
-dragon=monster("dragon","yellow","warrior" )
-loot_size_randomer(dragon,common)
+dragon=monster("dragon","yellow","warrior")
 
 high_wizard=monster("high wizard","black","warrior")
-loot_size_randomer(high_wizard,common)
 
 
 
@@ -744,6 +724,7 @@ class Room:
     if random.randint(0,5)>3:
       self.baddies=copy.deepcopy(random.choice(MonsterList))
       self.baddies.healthy()
+      self.baddies.looter()
 ############################################################################################################
 #Add rooms Below
 
