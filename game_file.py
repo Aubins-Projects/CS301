@@ -1,7 +1,7 @@
 import os.path
 import string
 import random
-
+import copy
 
 '''
 How you can make this your own game:
@@ -644,36 +644,48 @@ user=initial(name,player)
 
 #####################################################################################################################
 
+MonsterList=list()
+
 #These are the monsters in game
 class monster:
-  def __init__(self,name,health,color,classs):
+  def __init__(self,name,color,classs):
     self.name=name
-    self.health=health
+    self.health=0
     self.color=color
     self.classs=classs
     self.damage=10
     self.contents=list()
-    self.keys="" 
+    self.keys=""
+    self.starter() 
+    self.healthy()
   def __str__(self):
     return str(self.name)
   def __eq__(self,other):
     return self.name == other
-
+  def starter(self):
+    if self.name!="test":
+      MonsterList.append(self)
+  def healthy(self):
+    self.health=random.randint(100,200)*(user.level+random.randint(2,5))
+    self.damage=random.randint(50,150)*(user.level+random.randint(0,5))
+    print "entered the healthy loop"
+    print self.health
+    print self.damage
 
 ######################################################################################################################
 #Add monsters below
 
-blob=monster("blob",10000,"yellow","warrior" )
-blob.damage=10
+blob=monster("blob","yellow","warrior" )
 loot_size_randomer(blob,common)
 
-dragon=monster("dragon",1000,"yellow","warrior" )
-dragon.damage=10
+dragon=monster("dragon","yellow","warrior" )
 loot_size_randomer(dragon,common)
 
-high_wizard=monster("high wizard",random.randrange(1000,2000),"black","warrior")
-high_wizard.damage=random.randrange(100,200)
+high_wizard=monster("high wizard","black","warrior")
 loot_size_randomer(high_wizard,common)
+
+
+
 
 ######################################################################################################################
 
@@ -696,7 +708,8 @@ bedpan_massacre.changer.append(key)
 key_use = cause_n_effect("key", "a door slides open and behind it is a CAVE! Nice find "+str(name)+"!")
 fire_spolde= cause_n_effect("torch", "The prison bursts in flames, revealing a hidden gem! Nice find "+str(name)+"!")
 fire_spolde.changer.append(blooddiamond)
-#############################################################################################################
+#################
+############################################################################################
 class floor:
   def __init__(self,name,rooms=list()):
     self.name=name
@@ -730,6 +743,9 @@ class Room:
     self.visited=True
   def start_up(self):
     level1.rooms.append(self)
+    if random.randint(0,5)>3:
+      self.baddies=copy.deepcopy(random.choice(MonsterList))
+      self.baddies.healthy()
 ############################################################################################################
 #Add rooms Below
 
