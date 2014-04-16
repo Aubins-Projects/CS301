@@ -82,7 +82,7 @@ def look(what):
 
 #This if for looking at the entire room
 def room_contents_look(what):
-  print("************************** \n")
+  print("\n\n************************** \n")
   i=0
   for x in range(len(what.contents)):
     print(what.contents[i].name)
@@ -90,19 +90,35 @@ def room_contents_look(what):
   if what.east== None:
     i=0
   else:
-    print(str(what.east)+" is East")
+    print(str(what.east)+" is East"),
+    if (what.east.visited==False):
+      print "--Not visited yet"
+    else:
+      print
   if what.north== None:
     i=0
   else:
-    print(str(what.north)+" is North")
+    print(str(what.north)+" is North"),
+    if (what.north.visited==False):
+      print "--Not visited yet"
+    else:
+      print
   if what.west== None:
     i=0
   else:
-    print(str(what.west)+" is West")
+    print(str(what.west)+" is West"),
+    if (what.west.visited==False):
+      print "--Not visited yet"
+    else:
+      print
   if what.south== None:
     i=0
   else:
-    print(str(what.south)+" is South")
+    print(str(what.south)+" is South"),
+    if (what.south.visited==False):
+      print "--Not visited yet"
+    else:
+      print
     print("************************** \n")
 
 
@@ -214,7 +230,6 @@ def loc_finder(sav_x,sav_y):
       player["y"]=sav_y
   print(str(name)+", you are in the "+str(location))
   location.visitedFun()
-  print location.visited
 
 def map_finder(x,y):
   for room in level1.rooms:
@@ -253,7 +268,7 @@ def look_command(holder):
     elif holder[1] in ["north", "n"]:
       print(location.north)
     elif holder[1]in ["around", "a"]:
-      print ("this place: "+location.description)
+      print ("\n\nthis place: "+location.description)
       room_contents_look(location)
       if location.baddies:
         print("Monster name: "+str(location.baddies.name))
@@ -746,7 +761,6 @@ hallway1.y=8
 hallway2=Room("Hallway")
 hallway2.description="links other rooms, and may contain a torch or two"
 hallway2.x=11
-
 hallway2.y=9
 
 hallway3=Room("Hallway")
@@ -807,12 +821,21 @@ room1.y=13
 
 room2=Room("Room")
 room2.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
-room2.x=600
-room2.y=600
+room2.x=11
+room2.y=7
+
+
+
+
+
+room20=Room("Room")
+room20.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
+room20.x=600
+room20.y=600
 key.world="yes"
-key.x=10
+key.x=11
 key.y=13
-key.atloc=room2
+key.atloc=room20
 
 room3=Room("Room")
 room3.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
@@ -854,6 +877,15 @@ room10.description="might hold a secret or {0}".format(random.choice(["two","thr
 room10.x=15
 room10.y=12
 
+treasureRoom1=Room("Treasure Room")
+treasureRoom1.description="Contains a vast amount of treasure"
+treasureRoom1.x=900
+treasureRoom1.y=1700
+key.world="yes"
+key.x=9
+key.y=17
+key.atloc=treasureRoom1
+
 
 '''
 
@@ -883,7 +915,8 @@ key.x=12
 key.y=9
 key.atloc=cave
 
-
+y", line 970, in <module>
+    response=raw_in
 prison=Room("prison")
 prison.description="the stench of blood is thick here, but where did it all go. Is that oil?"
 prison.contents.append(torch)
@@ -926,17 +959,6 @@ location= castle_entrance
 
 
 #to test bag functionality
-
-user.contents.append(crown)
-user.contents.append(scepter)
-user.contents.append(vorpel_sword)
-user.contents.append(torch)
-user.contents.append(shield)
-user.contents.append(broken_shield)
-user.contents.append(broken_weapon)
-user.contents.append(perfect_w)
-user.contents.append(perfect_s)
-
 
 user.shield=broken_shield
 user.weapon=broken_weapon
