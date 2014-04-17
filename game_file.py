@@ -849,6 +849,160 @@ hallway12.description="links other rooms, and may contain a torch or two"
 hallway12.x=14
 hallway12.y=12
 
+hallway13=Room("Hallway")
+hallway13.description="links other rooms, and may contain a torch or two"
+hallway13.x=15
+hallway13.y=10
+
+hallway14=Room("Hallway")
+hallway14.description="links other rooms, and may contain a torch or two"
+hallway14.x=16
+hallway14.y=10
+
+hallway15=Room("Hallway")
+hallway15.description="links other rooms, and may contain a torch or two"
+hallway15.x=17
+hallway15.y=10
+
+hallway16=Room("Hallway")
+hallway16.description="links other rooms, and may contain a torch or two"
+hallway16.x=17
+hallway16.y=11
+
+hallway17=Room("Hallway")
+hallway17.description="links other rooms, and may contain a torch or two"
+hallway17.x=17
+hallway17.y=12
+
+hallway18=Room("Hallway")
+hallway18.description="links other rooms, and may contain a torch or two"
+hallway18.x=17
+hallway18.y=13
+
+hallway19=Room("Hallway")
+hallway19.description="links other rooms, and may contain a torch or two"
+hallway19.x=17
+hallway19.y=14
+
+hallway20=Room("Hallway")
+hallway20.description="links other rooms, and may contain a torch or two"
+hallway20.x=17
+hallway20.y=15
+
+hallway21=Room("Hallway")
+hallway21.description="links other rooms, and may contain a torch or two"
+hallway21.x=17
+hallway21.y=16
+
+hallway22=Room("Hallway")
+hallway22.description="links other rooms, and may contain a torch or two"
+hallway22.x=17
+hallway22.y=17
+
+hallway23=Room("Hallway")
+hallway23.description="links other rooms, and may contain a torch or two"
+hallway23.x=17
+hallway23.y=18
+
+hallway24=Room("Hallway")
+hallway24.description="links other rooms, and may contain a torch or two"
+hallway24.x=17
+hallway24.y=19
+
+hallway25=Room("Hallway")
+hallway25.description="links other rooms, and may contain a torch or two"
+hallway25.x=16
+hallway25.y=19
+
+hallway26=Room("Hallway")
+hallway26.description="links other rooms, and may contain a torch or two"
+hallway26.x=15
+hallway26.y=19
+
+hallway27=Room("Hallway")
+hallway27.description="links other rooms, and may contain a torch or two"
+hallway27.x=15
+hallway27.y=20
+
+hallway28=Room("Hallway")
+hallway28.description="links other rooms, and may contain a torch or two"
+hallway28.x=15
+hallway28.y=21
+
+hallway34=Room("Hallway")
+hallway34.description="links other rooms, and may contain a torch or two"
+hallway34.x=13
+hallway34.y=20
+
+hallway35=Room("Hallway")
+hallway35.description="links other rooms, and may contain a torch or two"
+hallway35.x=13
+hallway35.y=21
+
+hallway41=Room("Hallway")
+hallway41.description="links other rooms, and may contain a torch or two"
+hallway41.x=14
+hallway41.y=19
+
+hallway42=Room("Hallway")
+hallway42.description="links other rooms, and may contain a torch or two"
+hallway42.x=13
+hallway42.y=19
+
+hallway43=Room("Hallway")
+hallway43.description="links other rooms, and may contain a torch or two"
+hallway43.x=18
+hallway43.y=14
+
+hallway44=Room("Hallway")
+hallway44.description="links other rooms, and may contain a torch or two"
+hallway44.x=19
+hallway44.y=14
+
+hallway45=Room("Hallway")
+hallway45.description="links other rooms, and may contain a torch or two"
+hallway45.x=20
+hallway45.y=14
+
+hallway46=Room("Hallway")
+hallway46.description="links other rooms, and may contain a torch or two"
+hallway46.x=21
+hallway46.y=14
+
+hallway47=Room("Hallway")
+hallway47.description="A mystical item calls you nearby. '{0}? {0}, is that you?' ".format(user.name)
+hallway47.x=22
+hallway47.y=14
+
+hallway49=Room("Hallway")
+hallway49.description="links other rooms, and may contain a torch or two"
+hallway49.x=18
+hallway49.y=16
+
+hallway50=Room("Hallway")
+hallway50.description="links other rooms, and may contain a torch or two"
+hallway50.x=19
+hallway50.y=16
+
+hallway51=Room("Hallway")
+hallway51.description="links other rooms, and may contain a torch or two"
+hallway51.x=20
+hallway51.y=16
+
+hallway52=Room("Hallway")
+hallway52.description="links other rooms, and may contain a torch or two"
+hallway52.x=21
+hallway52.y=16
+
+hallway53=Room("Hallway")
+hallway53.description="A mystical item calls you nearby. '{0}? {0}, is that you?' ".format(user.name)
+hallway53.x=22
+hallway53.y=16
+
+
+
+
+
 room1=Room("Room")
 room1.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
 room1.x=11
@@ -908,6 +1062,12 @@ room10.description="might hold a secret or {0}".format(random.choice(["two","thr
 room10.x=15
 room10.y=12
 
+
+
+
+
+
+
 treasureRoom1=Room("Treasure Room")
 treasureRoom1.description="Contains a vast amount of treasure"
 treasureRoom1.x=900
@@ -928,44 +1088,6 @@ prison1.y=15
 
 user.contents.append(key)
 
-'''
-
-bedroom = Room("King\'s bedroom")
-bedroom.description="This is a room fit for a King"
-bedroom.contents.append(crown)
-bedroom.contents.append(scepter)
-bedroom.contents.append(vorpel_sword)
-bedroom.contents.append(kbedpan)
-bedroom.contents.append(broken_shield)
-bedroom.contents.append(broken_weapon)
-bedroom.usables.append(crown_explosion)
-bedroom.usables.append(bedpan_massacre)
-bedroom.x=10
-bedroom.y=10
-
-cave=Room("cave")
-cave.description="a bad aura lingers here"
-cave.baddies=high_wizard
-cave.contents.append(torch)
-cave.contents.append(perfect_w)
-cave.contents.append(perfect_s)
-cave.x=150000
-cave.y=900000
-key.world="yes"
-key.x=12
-key.y=9
-key.atloc=cave
-
-y", line 970, in <module>
-    response=raw_in
-prison=Room("prison")
-prison.description="the stench of blood is thick here, but where did it all go. Is that oil?"
-prison.contents.append(torch)
-prison.contents.append(lint)
-prison.usables.append(fire_spolde)
-prison.x=13
-prison.y=9
-'''
 
 
 
