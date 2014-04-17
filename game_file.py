@@ -553,11 +553,15 @@ key.destroy="yes"
 
 a1=Object("paper shield",10,"will mitigate some damage",300, "shield")
 shield=Object("shield",200,"will mitigate some damage",300,"shield")
-broken_shield=Object("broken shield",100,"will mitigate some damage",300, "shield")
+good_s=Object("good shield",200,"will mitigate some damage",400,"shield")
+best_s=Object("best shield",200,"will mitigate huge damage",1000,"shield")
+broken_shield=Object("broken shield",100,"will mitigate some damage",30, "shield")
 perfect_s=Object("best shield",10000,"will mitigate massive damage",30000, "shield")
 
 paper_weapon=Object("paper weapon",10,"will cause some damage",300, "weapon")
-broken_weapon=Object("broken weapon",100,"will cause some damage",300, "weapon")
+good_w=Object("good weapon",100,"will cause decent damage",400, "weapon")
+best_w=Object("best weapon",100,"will cause huge damage",1000, "weapon")
+broken_weapon=Object("broken weapon",100,"will cause some damage",30, "weapon")
 perfect_w=Object("best weapon",10000,"will deal massive damage",30000, "weapon")
 
 
@@ -671,10 +675,10 @@ class monster:
     
     if self.boss==False:
       self.health=random.randint(100,200)*(user.level+random.randint(2,5))
-      self.damage=random.randint(0,40)*(user.level+random.randint(0,5))
+      self.damage=random.randint(1,40)*(user.level+random.randint(0,5))
     else:
       self.health=random.randint(100,200)*(user.level+random.randint(8,12))
-      self.damage=random.randint(0,40)*(user.level+random.randint(5,9))
+      self.damage=random.randint(1,40)*(user.level+random.randint(5,9))
   def looter(self):
     for i in range(random.randint(1,4)):
       self.contents.append(random.choice(self.lootTable.items))
@@ -1192,7 +1196,26 @@ prison1.description=("Seems pretty cramped")
 prison1.x=10
 prison1.y=15
 
+best_room1=Room("Altar of a grand Weapon")
+best_room1.description=("Emense power eminates from the room...and possibly else where?")
+best_room1.x=2200
+best_room1.y=1500
+best_room1.contents.append(best_w)
+hallway47.makekey(22,15,best_room1,"yes")
+hallway53.makekey(22,15,best_room1,"yes")
 
+best_room2=Room("Altar of a grand shield")
+best_room2.description=("Emense power eminates from the room...and possibly else where?")
+best_room2.x=2300
+best_room2.y=1500
+best_room2.contents.append(best_s)
+best_room1.makekey(23,15,best_room2,"yes")
+
+user.contents.append(key)
+user.contents.append(key)
+user.contents.append(key)
+user.contents.append(key)
+user.contents.append(key)
 
 #These are all of the commands in the game
 commandlist = dict()
