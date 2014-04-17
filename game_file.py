@@ -637,7 +637,7 @@ MonsterList=list()
 
 #These are the monsters in game
 class monster:
-  def __init__(self,name,color,classs,lootTable=common):
+  def __init__(self,name,color,classs,lootTable=common,boss=False):
     self.name=name
     self.health=0
     self.color=color
@@ -645,15 +645,17 @@ class monster:
     self.damage=10
     self.contents=list()
     self.keys=""
+    self.boss=boss
     self.starter() 
     self.healthy()
     self.lootTable=lootTable
+    
   def __str__(self):
     return str(self.name)
   def __eq__(self,other):
     return self.name == other
   def starter(self):
-    if self.name!="test":
+    if self.name!="test" and self.boss==False:
       MonsterList.append(self)
   def healthy(self):
     self.health=random.randint(100,200)*(user.level+random.randint(2,5))
@@ -670,6 +672,26 @@ blob=monster("blob","yellow","warrior")
 dragon=monster("dragon","yellow","warrior")
 
 high_wizard=monster("high wizard","black","warrior")
+#boss
+
+bosslist=list()
+Fbosslist=list()
+
+class Boss(monster):
+  def __init__(self,name,color,classs,lootTable,boss):
+    monster.__init__(self,name,color,classs,uncommon,True)
+  def __str__(self):
+    return monster.__str__(self)
+  def bossStarter(self):
+    bosslist.append(self)
+
+class FinalBoss(monster):
+  def __init__(self,name,color,classs,lootTable,boss):
+    monster.__init__(self,name,color,classs,uncommon,True)
+  def __str__(self):
+    return monster.__str__(self)
+  def bossStarter(self):
+    Fbosslist.append(self)
 
 
 
@@ -731,10 +753,11 @@ class Room:
     self.visited=True
   def start_up(self):
     level1.rooms.append(self)
-    if random.randint(0,5)>3:
-      self.baddies=copy.deepcopy(random.choice(MonsterList))
-      self.baddies.healthy()
-      self.baddies.looter()
+    if self.name.lower() in ["hallway","room"]:
+      if random.randint(0,5)>3:
+        self.baddies=copy.deepcopy(random.choice(MonsterList))
+        self.baddies.healthy()
+        self.baddies.looter()
   def makekey(self,x,y,atloc,world):
     self.key=copy.deepcopy(key)
     self.key.x=x
