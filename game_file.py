@@ -263,10 +263,13 @@ def level_upper(monsterh,monsterd):
     print("*******************")
     print("you just leveled up to: "+str(user.level))
     print("*******************")
+  count=0
   for r in level1.rooms:
     if r.baddies!=None:
       r.baddies.healthy()
-
+      count+=1
+  print "The monsters appear to have gained strength as well!"
+  print "{0} monsters remaining!".format(count)
 
 def about_command(holder):
   if holder[0]=="about":
@@ -406,20 +409,20 @@ def help_command(holder):
       
 def attack_command(holder):
   if holder[0]=="attack":
-    holder.remove("attack")
-    otherholder=' '.join(holder)
+    #holder.remove("attack")
+    #otherholder=' '.join(holder)
     neitherdead=0
-    if otherholder == location.baddies:
-      if user.shield!= None:
-        yourhealth=(int(user.health) + int(user.shield.power))*int(player["Hmultiplier"])*(user.level+100)/90
-      else:
-        yourhealth=(int(user.health))*int(player["Hmultiplier"])*(user.level+100)/90
-      if user.weapon!= None:
-        yourdamage=(int(user.weapon.power)+user.damage)*int(player["Dmultiplier"])*(user.level+100)/90
-      else:
-        yourdamage=(user.damage)*int(player["Dmultiplier"])*(user.level+100)/90
-      monsterdamage=int(location.baddies.damage)
-      monsterhealth=int(location.baddies.health)
+    #if otherholder == location.baddies:
+    if user.shield!= None:
+      yourhealth=(int(user.health) + int(user.shield.power))*int(player["Hmultiplier"])*(user.level+100)/90
+    else:
+      yourhealth=(int(user.health))*int(player["Hmultiplier"])*(user.level+100)/90
+    if user.weapon!= None:
+      yourdamage=(int(user.weapon.power)+user.damage)*int(player["Dmultiplier"])*(user.level+100)/90
+    else:
+      yourdamage=(user.damage)*int(player["Dmultiplier"])*(user.level+100)/90
+    monsterdamage=int(location.baddies.damage)
+    monsterhealth=int(location.baddies.health)
     while neitherdead==0:
       monsterhealth=monsterhealth-yourdamage
       if user.weapon!= None: 
@@ -530,6 +533,11 @@ i16=Object("juice box", 3, "probably not good anymore",2)
 i17=Object("plate", 20, "appears to be able to hold things on its surface",1000)
 i18=Object("dead mouse", 100, "pretty sure you should not keep this",30)
 
+u1=Object("silver necklace", 100, "you could sell this if there was a shop",30)
+u2=Object("bronze tube", 100, "pretty much just a burden to carry",30)
+u3=Object("golden chalice", 100, "could store a liquid, or maybe your tears?",30)
+
+
 
 kbedpan=Object("bedpan", 3, "a smelly metal bowl",2)
 kbedpan.usable="yes"
@@ -570,7 +578,9 @@ uncommon=itemlist("uncommon")
 #UNCOMMON ITEMS
 
 uncommon.items.append(crown)
-
+uncommon.items.append(u1)
+uncommon.items.append(u2)
+uncommon.items.append(u3)
 
 
 
@@ -658,8 +668,13 @@ class monster:
     if self.name!="test" and self.boss==False:
       MonsterList.append(self)
   def healthy(self):
-    self.health=random.randint(100,200)*(user.level+random.randint(2,5))
-    self.damage=random.randint(0,40)*(user.level+random.randint(0,5))
+    
+    if self.boss==False:
+      self.health=random.randint(100,200)*(user.level+random.randint(2,5))
+      self.damage=random.randint(0,40)*(user.level+random.randint(0,5))
+    else:
+      self.health=random.randint(100,200)*(user.level+random.randint(8,12))
+      self.damage=random.randint(0,40)*(user.level+random.randint(5,9))
   def looter(self):
     for i in range(random.randint(1,4)):
       self.contents.append(random.choice(self.lootTable.items))
@@ -668,32 +683,49 @@ class monster:
 #Add monsters below
 
 blob=monster("blob","yellow","warrior")
-
 dragon=monster("dragon","yellow","warrior")
-
 high_wizard=monster("high wizard","black","warrior")
+
+
 #boss
 
 bosslist=list()
 Fbosslist=list()
 
 class Boss(monster):
-  def __init__(self,name,color,classs,lootTable,boss):
+  def __init__(self,name,color,classs):
     monster.__init__(self,name,color,classs,uncommon,True)
+    self.contents.append(key)
+    self.bossStarter()
   def __str__(self):
     return monster.__str__(self)
   def bossStarter(self):
     bosslist.append(self)
 
+
+b1=Boss("Giant Gnarlk","black", "warrior")
+b2=Boss("Werewolf","pink","warrior")
+b3=Boss("Angry Miner","red","warrior")
+b4=Boss("Troll","camo","warrior")
+b5=Boss("Kirbal","purple","warrior")
+b6=Boss("Deranged Prisoner","green","warrior")
+b7=Boss("Mutant Gorilla","black","warrior")
+
+
+
+
 class FinalBoss(monster):
-  def __init__(self,name,color,classs,lootTable,boss):
+  def __init__(self,name,color,classs):
     monster.__init__(self,name,color,classs,uncommon,True)
+    self.bossStarter()
   def __str__(self):
     return monster.__str__(self)
   def bossStarter(self):
     Fbosslist.append(self)
+  def killed(self):
+    print("YOU HAVE WON THE GAME!!!")
 
-
+f1=FinalBoss("EECS Instructor","gray","warrior")
 
 
 ######################################################################################################################
@@ -958,6 +990,7 @@ hallway44=Room("Hallway")
 hallway44.description="links other rooms, and may contain a torch or two"
 hallway44.x=19
 hallway44.y=14
+hallway44.baddies=random.choice(bosslist)
 
 hallway45=Room("Hallway")
 hallway45.description="links other rooms, and may contain a torch or two"
@@ -999,9 +1032,12 @@ hallway53.description="A mystical item calls you nearby. '{0}? {0}, is that you?
 hallway53.x=22
 hallway53.y=16
 
-
-
-
+goodWeapon=Room("Hidden Armory")
+goodWeapon.description="A grand weapon sits in the middle of the room"
+goodWeapon.x=1900
+goodWeapon.y=1500
+hallway44.makekey(19,15,goodWeapon,"yes")
+hallway50.makekey(19,15,goodWeapon,"yes")
 
 room1=Room("Room")
 room1.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
@@ -1062,11 +1098,82 @@ room10.description="might hold a secret or {0}".format(random.choice(["two","thr
 room10.x=15
 room10.y=12
 
+boss1=Room("Boss Room")
+boss1.description="A boss lies in wait"
+boss1.x=13
+boss1.y=22
+boss1.baddies=random.choice(bosslist)
+
+boss2=Room("Boss Room")
+boss2.description="A boss lies in wait"
+boss2.x=1300
+boss2.y=2300
+boss1.makekey(13,23,boss2,"yes")
+boss2.baddies=random.choice(bosslist)
 
 
+boss3=Room("Boss Room")
+boss3.description="A boss lies in wait"
+boss3.x=1300
+boss3.y=2400
+boss2.makekey(13,24,boss3,"yes")
+boss3.baddies=random.choice(bosslist)
 
+boss4=Room("Boss Room")
+boss4.description="A boss lies in wait"
+boss4.x=13
+boss4.y=2500
+boss3.makekey(13,25,boss4,"yes")
+boss4.baddies=random.choice(bosslist)
 
+boss5=Room("Boss Room")
+boss5.description="A boss lies in wait"
+boss5.x=13
+boss5.y=2600
+boss4.makekey(13,26,boss5,"yes")
+boss5.baddies=random.choice(bosslist)
 
+boss6=Room("Boss Room")
+boss6.description="A boss lies in wait"
+boss6.x=15
+boss6.y=22
+boss6.baddies=random.choice(bosslist)
+
+boss7=Room("Boss Room")
+boss7.description="A boss lies in wait"
+boss7.x=15
+boss7.y=2300
+boss6.makekey(15,23,boss7,"yes")
+boss7.baddies=random.choice(bosslist)
+
+boss8=Room("Boss Room")
+boss8.description="A boss lies in wait"
+boss8.x=15
+boss8.y=2400
+boss7.makekey(15,24,boss8,"yes")
+boss8.baddies=random.choice(bosslist)
+
+boss9=Room("Boss Room")
+boss9.description="A boss lies in wait"
+boss9.x=15
+boss9.y=2500
+boss8.makekey(15,25,boss9,"yes")
+boss9.baddies=random.choice(bosslist)
+
+boss10=Room("Boss Room")
+boss10.description="A boss lies in wait"
+boss10.x=15
+boss10.y=2600
+boss9.makekey(15,26,boss10,"yes")
+boss10.baddies=random.choice(bosslist)
+
+boss11=Room("Boss Room")
+boss11.description="The Final boss lies in wait {0}. You had better be prepared".format(user.name)
+boss11.x=14
+boss11.y=2600
+boss10.makekey(14,26,boss11,"yes")
+boss5.makekey(14,26,boss11,"yes")
+boss11.baddies=random.choice(Fbosslist)
 
 treasureRoom1=Room("Treasure Room")
 treasureRoom1.description="Contains a vast amount of treasure"
@@ -1084,16 +1191,6 @@ prison1=Room("Prison")
 prison1.description=("Seems pretty cramped")
 prison1.x=10
 prison1.y=15
-
-
-user.contents.append(key)
-
-
-
-
-
-
-
 
 
 
@@ -1122,8 +1219,8 @@ location= castle_entrance
 castle_entrance.visitedFun()
 #to test bag functionality
 
-user.shield=broken_shield
-user.weapon=broken_weapon
+user.shield=perfect_w
+user.weapon=perfect_s
 
 #This is really the only executed code for the whole game, its long because of the quitting functionality
 #You can only save your score if you quit properly
@@ -1135,6 +1232,8 @@ user.weapon=broken_weapon
 
 while not response  == "dfhsergghj":
   response=raw_input("\nCommand: \n")
+  for i in range(40):
+    print
   if response == "quit":
     ask_ok("You are about to quit, type no to quit")
     if player["relive"]==0:
