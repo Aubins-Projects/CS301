@@ -174,19 +174,20 @@ def scorecheck():
 
 
 def coordinates(direction):
-
-  global location
-  sav_x=player["x"]
-  sav_y=player["y"]
-  if direction in ["east" , "e"]:
-     player["x"]=player["x"]+1
-  elif direction in ["west" , "w"]:
-     player["x"]=player["x"]-1
-  elif direction in ["north" , "n"]:
-     player["y"]=player["y"]+1
-  elif direction in ["south" , "s"]:
-     player["y"]=player["y"]-1
-  loc_finder(sav_x,sav_y)
+  for char in direction:
+    global location
+    sav_x=player["x"]
+    sav_y=player["y"]
+    
+    if char in ["e"]:
+       player["x"]=player["x"]+1
+    elif char in ["w"]:
+       player["x"]=player["x"]-1
+    elif char in ["n"]:
+       player["y"]=player["y"]+1
+    elif char in ["s"]:
+       player["y"]=player["y"]-1
+    loc_finder(sav_x,sav_y)
 
 ###########################################################################################
 #This is the automatic mapper once you add the grids in the room OBJECT and the floor OBJECT
@@ -475,7 +476,7 @@ def what_you_do(holder):
 
 #Your items found in game
 class Object:
-  def __init__(self, name, value, description, power, equip="item",atloc='',usable="no",world="no",destroy="no"):
+  def __init__(self, name, value, description, power=0, equip="item",atloc='',usable="no",world="no",destroy="no"):
     self.name=name
     self.value=value
     self.description=description
@@ -508,37 +509,53 @@ class itemlist:
 
 ############################################################################################################
 #world ITEMS
-# name, value, description, power,uid, equip="item",atloc='',usable="no",world="no",destroy="no" 
-crown = Object("crown", 15000, "a gold crown with many jewels",10)
-ball = Object("ball", 1500, "a ball that looks like a pong ball",10)
-crown.usable="yes"
-scepter =Object("King's scepter", 10000, "a silver sceptre",30)
-vorpel_sword=Object("vorpel sword", 200, "a strange looking sword",1000)
+# name, value, description, power, equip="item",atloc='',usable="no",world="no",destroy="no" 
+
+i1=Object("clock",100,"time is stuck at 11:11...that is precarious, precarious indeed")
+i2=Object("broom",15,"a dusting device, with a long lever")
+i3=Object("feather",20,"tickles the nose when placed ever so close to it")
+i4=Object("match",25,"seems to be some sort of small relative to the torches")
+i5=Object("Blood Diamond",150000,"a blood diamond, formed from vast amounts of blood and a fiery explosion", 20)
+i6=Object("ball", 1500, "a ball that looks like a pong ball",10)
+i7=Object("King's scepter", 10000, "a silver sceptre",30)
+i8=Object("vorpel sword", 200, "a strange looking sword",1000)
+i9=Object("bedpan", 3, "a smelly metal bowl",2)
+i10=Object("skull", 15000, "a giant skull",100)
+i11=Object("talon", 1500, "a giant talon",100)
+i12=Object("lint", 100, "a piece of lint",100)
+i13=Object("scrap metal", 150, "a gold crown with many jewels",10)
+i14=Object("credit card", 1, "this seems out of place",78)
+i15=Object("old movie",20,"looks like pokemon 1",300)
+i16=Object("juice box", 3, "probably not good anymore",2)
+i17=Object("plate", 20, "appears to be able to hold things on its surface",1000)
+i18=Object("dead mouse", 100, "pretty sure you should not keep this",30)
+
+
 kbedpan=Object("bedpan", 3, "a smelly metal bowl",2)
 kbedpan.usable="yes"
-bedpan=Object("bedpan", 3, "a smelly metal bowl",2)
 torch=Object("torch", 1, "fire attatched to a stick",78)
 torch.usable="yes"
-shield=Object("shield",200,"will mitigate some damage",300)
-broken_shield=Object("broken shield",100,"will mitigate some damage",300, "shield")
-broken_weapon=Object("broken weapon",100,"will cause some damage",300, "weapon")
-perfect_w=Object("best weapon",10000,"will deal massive damage",30000, "weapon")
-perfect_s=Object("best shield",10000,"will mitigate massive damage",30000, "shield")
-skull=Object("skull", 15000, "a giant skull",100)
-talon=Object("talon", 1500, "a giant talon",100)
-lint=Object("lint", 100, "a piece of lint",100)
+crown = Object("crown", 15000, "a gold crown with many jewels",10)
+crown.usable="yes"
 key=Object("key",1200,"this might be useful for doing key things",12)
 key.usable="yes"
 key.destroy="yes"
-blooddiamond=Object("Blood Diamond",150000,"a blood diamond, formed from vast amounts of blood and a fiery explosion", 20)
+
+
+
+a1=Object("paper shield",10,"will mitigate some damage",300, "shield")
+shield=Object("shield",200,"will mitigate some damage",300,"shield")
+broken_shield=Object("broken shield",100,"will mitigate some damage",300, "shield")
+perfect_s=Object("best shield",10000,"will mitigate massive damage",30000, "shield")
+
 paper_weapon=Object("paper weapon",10,"will cause some damage",300, "weapon")
-scrap_metal=Object("scrap metal", 150, "a gold crown with many jewels",10)
-credit_card=Object("credit card", 1, "this seems out of place",78)
-paper_shield=Object("paper shield",10,"will mitigate some damage",300, "shield")
-old_movie=Object("old movie",20,"looks like pokemon 1",300)
-juice_box=Object("juice box", 3, "probably not good anymore",2)
-plate=Object("plate", 20, "appears to be able to hold things on its surface",1000)
-dead_mouse=Object("dead mouse", 100, "pretty sure you should not keep this",30)
+broken_weapon=Object("broken weapon",100,"will cause some damage",300, "weapon")
+perfect_w=Object("best weapon",10000,"will deal massive damage",30000, "weapon")
+
+
+
+
+
 
 
 # name, value, description, power,uid, equip="item",atloc='',usable="no",world="no",destroy="no"
@@ -553,16 +570,7 @@ uncommon=itemlist("uncommon")
 #UNCOMMON ITEMS
 
 uncommon.items.append(crown)
-uncommon.items.append(scepter)
-uncommon.items.append(vorpel_sword)
-uncommon.items.append(bedpan)
-uncommon.items.append(torch)
-uncommon.items.append(shield)
-uncommon.items.append(perfect_w)
-uncommon.items.append(perfect_s)
-uncommon.items.append(skull)
-uncommon.items.append(talon)
-uncommon.items.append(lint)
+
 
 
 
@@ -573,17 +581,20 @@ uncommon.items.append(lint)
 
 #COMMON ITEMS
 
-common= itemlist("common")
-common.items.append(dead_mouse)
-common.items.append(plate)
-common.items.append(juice_box)
-common.items.append(paper_shield)
-common.items.append(old_movie)
-common.items.append(credit_card)
-common.items.append(paper_weapon)
-common.items.append(skull)
-common.items.append(talon)
-common.items.append(lint)
+common=itemlist("common")
+common.items.append(i1)
+common.items.append(i2)
+common.items.append(i3)
+common.items.append(i4)
+common.items.append(i5)
+common.items.append(i6)
+common.items.append(i7)
+common.items.append(i8)
+common.items.append(i9)
+common.items.append(i10)
+common.items.append(i11)
+common.items.append(i12)
+common.items.append(i18)
 
 
 
@@ -683,7 +694,7 @@ bedpan_massacre= cause_n_effect("bedpan","you just spilled feces all over the pl
 bedpan_massacre.changer.append(key)
 key_use = cause_n_effect("key", "a door slides open and behind it is a CAVE! Nice find "+str(name)+"!")
 fire_spolde= cause_n_effect("torch", "The prison bursts in flames, revealing a hidden gem! Nice find "+str(name)+"!")
-fire_spolde.changer.append(blooddiamond)
+fire_spolde.changer.append(i5)
 #################
 ############################################################################################
 class floor:
@@ -713,7 +724,7 @@ class Room:
     self.y=0
     self.visited=False
     self.start_up()
-    self.key=lint
+    self.key=i1
   def __str__(self):
     return str(self.name)
   def visitedFun(self):
@@ -946,7 +957,7 @@ commandlist = dict()
 
 commandlist['points']="type points to get your current points"
 commandlist['go']="type go and then a cardinal direction"
-commandlist['look']="type look and then a cardinal direction, or around to look around"
+commandlist['look']="type look and then a cardinal direction (n,s,e,w), or around to look around"
 commandlist['quit']="type quit and then follow the directions to quit"
 commandlist['about']="type about [item] and then what object you want to learn about"
 commandlist['bag']="type bag to see whats in your bag"
