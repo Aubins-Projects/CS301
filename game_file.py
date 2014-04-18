@@ -164,7 +164,7 @@ def scorecheck():
     print(logfile.readline())
   logfile.close()
   print("************************** \n")
-  print("The your score is: "+ str(player["points"]))
+  print("Your score is: "+ str(player["points"]))
   
 
 
@@ -246,9 +246,12 @@ def look_command(holder):
       print ("\n\nthis place: "+location.description)
       room_contents_look(location)
       if location.baddies:
+        print "\n*********************************\n"
         print("Monster name: "+str(location.baddies.name))
         print("Monster health: "+str(location.baddies.health))
         print("Monster damage: "+str(location.baddies.damage))
+        if location.baddies.__class__.__name__ == "Boss":
+          print "\nThis monster is stronger than the rest...there might be a hidden room nearby\n"
 
 
 def level_upper(monsterh,monsterd):
@@ -752,7 +755,7 @@ bedpan_massacre= cause_n_effect("bedpan","you just spilled feces all over the pl
 bedpan_massacre.changer.append(key)
 key_use = cause_n_effect("key", "a door slides open and behind it is a CAVE! Nice find "+str(name)+"!")
 fire_spolde= cause_n_effect("torch", "The prison bursts in flames, revealing a hidden gem! Nice find "+str(name)+"!")
-fire_spolde.changer.append(i5)
+fire_spolde.changer.append(key)
 #################
 ############################################################################################
 class floor:
@@ -767,7 +770,7 @@ level1= floor("ground level")
 
 #Your room object
 class Room:
-  def __init__(self,name,north="wall",east="wall",west="wall",south="wall",description="Just a plain wall"):
+  def __init__(self,name,north=None,east=None,west=None,south=None,description="Just a plain wall"):
     self.name=name
     self.north=north
     self.east=east
@@ -1211,11 +1214,6 @@ best_room2.y=1500
 best_room2.contents.append(best_s)
 best_room1.makekey(23,15,best_room2,"yes")
 
-user.contents.append(key)
-user.contents.append(key)
-user.contents.append(key)
-user.contents.append(key)
-user.contents.append(key)
 
 #These are all of the commands in the game
 commandlist = dict()
@@ -1265,6 +1263,9 @@ while not response  == "dfhsergghj":
   holder=(response.split())
   mapping()
   what_you_do(holder)
+  if holder[0] not in ["look","l"]:
+    mapping()
+    what_you_do(['l','a'])
 #  except:
 
 #    print("type a command please")
