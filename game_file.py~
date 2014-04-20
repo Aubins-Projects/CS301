@@ -351,6 +351,7 @@ def unequip_command(holder):
 
 def give_command(holder):
   if holder[0] == "give":
+    
     if location.baddies:
       if holder[1] in user.contents:
         for item in user.contents:
@@ -365,6 +366,7 @@ def give_command(holder):
               print("\tDescription: "+str(item.description)+"\n")
               user.contents.append(item)           
             location.baddies=None
+            break
           elif item.name == holder[1] and holder[1] in location.baddies.hates:
             print "===========The monster was ENRAGED==========="
             location.baddies.health*=3        
@@ -602,13 +604,13 @@ a1=Object("paper shield",10,"will mitigate some damage",300, "shield")
 shield=Object("shield",200,"will mitigate some damage",300,"shield")
 good_s=Object("good shield",200,"will mitigate some damage",400,"shield")
 best_s=Object("best shield",200,"will mitigate huge damage",1000,"shield")
-broken_shield=Object("broken shield",100,"will mitigate some damage",30, "shield")
+broken_s=Object("broken shield",100,"will mitigate some damage",200, "shield")
 perfect_s=Object("best shield",10000,"will mitigate massive damage",30000, "shield")
 
 paper_weapon=Object("paper weapon",10,"will cause some damage",300, "weapon")
 good_w=Object("good weapon",100,"will cause decent damage",400, "weapon")
 best_w=Object("best weapon",100,"will cause huge damage",1000, "weapon")
-broken_weapon=Object("broken weapon",100,"will cause some damage",30, "weapon")
+broken_w=Object("broken weapon",100,"will cause some damage",200, "weapon")
 perfect_w=Object("best weapon",10000,"will deal massive damage",30000, "weapon")
 
 
@@ -744,7 +746,7 @@ class monster:
 ######################################################################################################################
 #Add monsters below
 
-blob=monster("blob","yellow","warrior",i2)
+blob=monster("blob","yellow","warrior",i19)
 dragon=monster("dragon","yellow","warrior",i11)
 high_wizard=monster("high wizard","black","warrior",i2)
 user.contents.append(i1)
@@ -1035,7 +1037,7 @@ hallway44=Room("Hallway")
 hallway44.description="links other rooms, and may contain a torch or two"
 hallway44.x=19
 hallway44.y=14
-hallway44.baddies=random.choice(bosslist)user.contents.append()
+hallway44.baddies=random.choice(bosslist)
 
 hallway45=Room("Hallway")
 hallway45.description="links other rooms, and may contain a torch or two"
@@ -1318,14 +1320,9 @@ print("\ntype help for a list of all commands\n")
 #Starting location:
 location= castle_entrance
 castle_entrance.visitedFun()
-#to test bag functionality
-user.contents.append(i1)
-user.contents.append(i2)
-user.contents.append(i2)
-user.contents.append(i2)
-user.contents.append(i2)   
-user.weapon=perfect_w
-user.shield=perfect_s
+#to test bag functionality  
+user.weapon=broken_w
+user.shield=broken_s
 
 #This is really the only executed code for the whole game, its long because of the quitting functionality
 #You can only save your score if you quit properly
@@ -1346,6 +1343,10 @@ while not response  == "dfhsergghj":
       response="dfhsergghj"
 #  try:
   holder=(response.split())
+  for i in range(len(holder)):
+    if i>1:
+      holder[1]+=" "+str(holder[i])
+  print holder
   mapping()
   what_you_do(holder)
   if holder[0] not in ["look","l"]:
