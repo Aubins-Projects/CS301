@@ -160,3 +160,5 @@
 0	aub
 0	aub
 84951	aub
+1260	Aub
+496	Aub

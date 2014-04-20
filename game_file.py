@@ -349,8 +349,29 @@ def unequip_command(holder):
         user.shield=None
         print("you just took off a(n) "+str(otherholder))
 
-        
-      
+def give_command(holder):
+  if holder[0] == "give":
+    if location.baddies:
+      if holder[1] in user.contents:
+        for item in user.contents:
+          if item.name == holder[1] and location.baddies.takes.name==holder[1]:
+            user.contents.remove(item)
+            print "===========The monster was pacified==========="
+            for item in location.baddies.contents:
+              if item==None:
+                break
+              print "It gave you:\n"            
+              print("a(n) "+str(item))
+              print("\tDescription: "+str(item.description)+"\n")
+              user.contents.append(item)           
+            location.baddies=None
+          elif item.name == holder[1] and holder[1] in location.baddies.hates:
+            print "===========The monster was ENRAGED==========="
+            location.baddies.health*=3        
+            location.baddies.damage*=3
+            user.contents.remove(item)
+            
+
 def bag_command(holder):
   if holder[0]=="bag":
     import bag
@@ -494,6 +515,7 @@ def what_you_do(holder):
   about_command(holder)
   help_command(holder)
   attack_command(holder)
+  give_command(holder)
   if holder[0]=="points":
     scorecheck()
 
@@ -555,6 +577,8 @@ i15=Object("old movie",20,"looks like pokemon 1",300)
 i16=Object("juice box", 3, "probably not good anymore",2)
 i17=Object("plate", 20, "appears to be able to hold things on its surface",1000)
 i18=Object("dead mouse", 100, "pretty sure you should not keep this",30)
+i19=Object("jar of pus",43, "Looks just like a blob...maybe they would like it?",98)
+
 
 u1=Object("silver necklace", 100, "you could sell this if there was a shop",30)
 u2=Object("bronze tube", 100, "pretty much just a burden to carry",30)
@@ -632,6 +656,7 @@ common.items.append(i10)
 common.items.append(i11)
 common.items.append(i12)
 common.items.append(i18)
+common.items.append(i19)
 
 
 
@@ -674,7 +699,7 @@ MonsterList=list()
 
 #These are the monsters in game
 class monster:
-  def __init__(self,name,color,classs,lootTable=common,boss=False):
+  def __init__(self,name,color,classs,takes,lootTable=common,boss=False):
     self.name=name
     self.health=0
     self.color=color
@@ -683,10 +708,13 @@ class monster:
     self.contents=list()
     self.keys=""
     self.boss=boss
+    self.hates=list()
+    self.takes=takes
     self.starter() 
     self.healthy()
     self.lootTable=lootTable
     
+
   def __str__(self):
     return str(self.name)
   def __eq__(self,other):
@@ -694,14 +722,21 @@ class monster:
   def starter(self):
     if self.name!="test" and self.boss==False:
       MonsterList.append(self)
-  def healthy(self):
-    
+  def healthy(self):    
     if self.boss==False:
       self.health=random.randint(100,200)*(user.level+random.randint(2,5))
       self.damage=random.randint(1,40)*(user.level+random.randint(0,5))
+      while len(self.hates)<7:
+        x=random.choice(common.items)
+        if  x != self.takes:
+          self.hates.append(x)
+          print x
     else:
       self.health=random.randint(100,200)*(user.level+random.randint(8,12))
       self.damage=random.randint(1,40)*(user.level+random.randint(5,9))
+      for item in ALLITEMS:
+        self.hates.append(item)
+
   def looter(self):
     for i in range(random.randint(1,4)):
       self.contents.append(random.choice(self.lootTable.items))
@@ -709,19 +744,18 @@ class monster:
 ######################################################################################################################
 #Add monsters below
 
-blob=monster("blob","yellow","warrior")
-dragon=monster("dragon","yellow","warrior")
-high_wizard=monster("high wizard","black","warrior")
-
-
+blob=monster("blob","yellow","warrior",i2)
+dragon=monster("dragon","yellow","warrior",i11)
+high_wizard=monster("high wizard","black","warrior",i2)
+user.contents.append(i1)
 #boss
 
 bosslist=list()
 Fbosslist=list()
 
 class Boss(monster):
-  def __init__(self,name,color,classs):
-    monster.__init__(self,name,color,classs,uncommon,True)
+  def __init__(self,name,color,classs,takes):
+    monster.__init__(self,name,color,classs,takes,uncommon,True)
     self.contents.append(key)
     self.bossStarter()
   def __str__(self):
@@ -730,20 +764,20 @@ class Boss(monster):
     bosslist.append(self)
 
 
-b1=Boss("Giant Gnarlk","black", "warrior")
-b2=Boss("Werewolf","pink","warrior")
-b3=Boss("Angry Miner","red","warrior")
-b4=Boss("Troll","camo","warrior")
-b5=Boss("Kirbal","purple","warrior")
-b6=Boss("Deranged Prisoner","green","warrior")
-b7=Boss("Mutant Gorilla","black","warrior")
+b1=Boss("Giant Gnarlk","black", "warrior",i1)
+b2=Boss("Werewolf","pink","warrior",i1)
+b3=Boss("Angry Miner","red","warrior",i1)
+b4=Boss("Troll","camo","warrior",i1)
+b5=Boss("Kirbal","purple","warrior",i1)
+b6=Boss("Deranged Prisoner","green","warrior",i1)
+b7=Boss("Mutant Gorilla","black","warrior",i1)
 
 
 
 
 class FinalBoss(monster):
-  def __init__(self,name,color,classs):
-    monster.__init__(self,name,color,classs,uncommon,True)
+  def __init__(self,name,color,classs,takes):
+    monster.__init__(self,name,color,classs,takes,uncommon,True)
     self.bossStarter()
   def __str__(self):
     return monster.__str__(self)
@@ -752,7 +786,7 @@ class FinalBoss(monster):
   def killed(self):
     print("YOU HAVE WON THE GAME!!!")
 
-f1=FinalBoss("EECS Instructor","gray","warrior")
+f1=FinalBoss("EECS Instructor","gray","warrior",i1)
 
 
 ######################################################################################################################
