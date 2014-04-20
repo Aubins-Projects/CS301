@@ -5,3 +5,16 @@ lint: http://exequy.files.wordpress.com/2012/09/lint1.jpg
 bedpan: http://www.nursingtimes.net/pictures/586xAny/8/3/1/1211831_bedpan.jpg
 key: http://presentationhut.com/wp-content/uploads/KeyToSuccess.jpeg
 best weapon: http://www.gla-mur.ru/repository/3d/www.pcwalls.ru_63.jpg
+clock: http://upload.wikimedia.org/wikipedia/commons/b/b5/Old_Pendulum_clock.jpg
+feather: http://www.photo-dictionary.com/photofiles/list/81/1836feather.jpg
+broom: http://cf067b.medialib.glogster.com/media/61/61fbc5372f2e8e8f85046cb79c80ca3bfb8c5a9f9fafdcd272ab1478fdaef658/broom-jpg.jpg
+rusty spoon: http://i107.photobucket.com/albums/m295/zeropioneer/rustyspoon.gif
+talon: https://www.skullsunlimited.com/userfiles/image/category3_family_210_large.jpg
+skull: http://www.rudyard.org/wp-content/uploads/2013/09/human-skull-front.jpg
+old movie: http://www.videotransfer.ca/vancouver/assets/images/services/8mm.jpg
+dead mouse: http://blogs.flashsupport.com/robert/images/2007_11_24_dead_mouse.jpg
+juice box: http://www.do2learn.com/picturecards/images/imageschedule/juicebox_l.gif
+plate: http://thegraphicsfairy.com/wp-content/uploads/blogger/-TI5RDx9oCYw/Twcbo_ntHZI/AAAAAAAAQGM/-ccjedkr-vg/s1600/plate%2Bvintage%2BImage%2BGraphicsFairy2blu.jpg
+king's scepter: http://images.buycostumes.com/mgen/17005.jpg?zm=1600,1600,1,0,0
+jar of pus: http://mytimeathome.files.wordpress.com/2012/02/dsc03549.jpg
+golden chalice: http://galacticconnection.com/wp-content/uploads/2013/01/Golden-Chalice.png

@@ -1035,7 +1035,7 @@ hallway44=Room("Hallway")
 hallway44.description="links other rooms, and may contain a torch or two"
 hallway44.x=19
 hallway44.y=14
-hallway44.baddies=random.choice(bosslist)
+hallway44.baddies=random.choice(bosslist)user.contents.append()
 
 hallway45=Room("Hallway")
 hallway45.description="links other rooms, and may contain a torch or two"
