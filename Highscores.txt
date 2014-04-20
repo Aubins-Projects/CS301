@@ -79,6 +79,7 @@
 11000	Aubin
 11000	Aubin
 11000	aubin
+10003	Aubin
 10000	a
 10000	a
 1994	Aubin
@@ -158,4 +159,4 @@
 0	aubin
 0	aub
 0	aub
-10003	Aubin
+84951	aub

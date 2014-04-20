@@ -23,6 +23,8 @@ holder=list
 #This is what lets you put your name in and then checks your score
 def namechecker():
   name=raw_input("Enter your name please \n")
+  name=name.lower()
+  name=name.capitalize()
   if name in ('Aubin','aubin'):
     print("Welcome your highness")
   else:
@@ -63,7 +65,9 @@ def look(what):
 
 #This if for looking at the entire room
 def room_contents_look(what):
-  print("\n\n************************** \n")
+  print("\n\n"+"*"*35)
+  print("\tRooms Nearby:\t")
+  print "*"*35
   i=0
   for x in range(len(what.contents)):
     print(what.contents[i].name)
@@ -100,7 +104,8 @@ def room_contents_look(what):
       print "--Not visited yet"
     else:
       print
-    print("************************** \n")
+  print "*"*35
+  print 
 
 
 #This is the reassurance for trying to quit
@@ -200,10 +205,13 @@ def loc_finder(sav_x,sav_y):
     if room.x==player["x"] and room.y==player["y"]:
       location= room
       check=1
+      print(str(name)+", you are in the "+str(location))
+      
   if check == 0:
-      player["x"]=sav_x
-      player["y"]=sav_y
-  print(str(name)+", you are in the "+str(location))
+    player["x"]=sav_x
+    player["y"]=sav_y
+    print str(name)+", you did not change rooms"      
+  
   location.visitedFun()
 
 def map_finder(x,y):
@@ -243,15 +251,19 @@ def look_command(holder):
     elif holder[1] in ["north", "n"]:
       print(location.north)
     elif holder[1]in ["around", "a"]:
-      print ("\n\nthis place: "+location.description)
+      print ("\n\tAbout this place: "+location.description)
       room_contents_look(location)
       if location.baddies:
-        print "\n*********************************\n"
+        print 
+        print "*"*35
+        print "Monsters in Room"
+        print "*"*35
         print("Monster name: "+str(location.baddies.name))
         print("Monster health: "+str(location.baddies.health))
         print("Monster damage: "+str(location.baddies.damage))
         if location.baddies.__class__.__name__ == "Boss":
           print "\nThis monster is stronger than the rest...there might be a hidden room nearby\n"
+        print "*"*35
 
 
 def level_upper(monsterh,monsterd):
@@ -263,16 +275,15 @@ def level_upper(monsterh,monsterd):
     user.exp-=500
     user.level+=1
     user.exp=user.exp*(100-user.level)/150
-    print("*******************")
-    print("you just leveled up to: "+str(user.level))
-    print("*******************")
+    print("\nyou just leveled up to: "+str(user.level))
+    print("*"*35)
   count=0
   for r in level1.rooms:
     if r.baddies!=None:
       r.baddies.healthy()
       count+=1
-  print "The monsters appear to have gained strength as well!"
-  print "{0} monsters remaining!".format(count)
+  print "\nThe monsters appear to have gained strength as well!"
+  print "{0} monsters remaining!\n\n".format(count)
 
 def about_command(holder):
   if holder[0]=="about":
@@ -345,14 +356,17 @@ def bag_command(holder):
     import bag
     bag.main(user.contents)
     i=0
-    print("************************** \n You currently have in your bag:")
+    print("*"*35)
+    print "You currently have in your bag:"
     for x in range(len(user.contents)):
       print("a(n) "+str(user.contents[i]))
       i=i+1
-    print("************************** \n You currently have equipped:")
+    print("*"*35)
+    print("\n"+"*"*35)
+    print "You currently have equipped:"
     print("a(n) "+str(user.shield)+" as your shield")
     print("a(n) "+str(user.weapon)+" as your weapon")
-
+    print("*"*35)
 def drop_command(holder):
   if holder[0]in ["drop","d"]:
     temp_word_holder=str(holder[0])
@@ -377,7 +391,7 @@ def use_command(holder):
       if (user.contents[user.contents.index(otherholder)].usable=="yes"):
         location.used.append(user.contents[user.contents.index(otherholder)])
         print("you just used "+ otherholder + " in the " +str(location))
-        if otherholder in location.usables or location.key.name==user.contents[user.contents.index("key")].name:
+        if otherholder in location.usables:
          cause_and_effect(otherholder)
       else:
         print(str(user.contents[user.contents.index(otherholder)])+" is not usable.")
@@ -412,53 +426,57 @@ def help_command(holder):
       
 def attack_command(holder):
   if holder[0]=="attack":
-    #holder.remove("attack")
-    #otherholder=' '.join(holder)
-    neitherdead=0
-    #if otherholder == location.baddies:
-    if user.shield!= None:
-      yourhealth=(int(user.health) + int(user.shield.power))*int(player["Hmultiplier"])*(user.level+100)/90
-    else:
-      yourhealth=(int(user.health))*int(player["Hmultiplier"])*(user.level+100)/90
-    if user.weapon!= None:
-      yourdamage=(int(user.weapon.power)+user.damage)*int(player["Dmultiplier"])*(user.level+100)/90
-    else:
-      yourdamage=(user.damage)*int(player["Dmultiplier"])*(user.level+100)/90
-    monsterdamage=int(location.baddies.damage)
-    monsterhealth=int(location.baddies.health)
-    while neitherdead==0:
-      monsterhealth=monsterhealth-yourdamage
-      if user.weapon!= None: 
-        print("you just attacked "+str(location.baddies.name) +" with: "+ str(user.weapon.name))
+    if location.baddies:
+      print"="*11+"BATTLE"+"="*11
+      neitherdead=0
+      if user.shield!= None:
+        yourhealth=(int(user.health) + int(user.shield.power))*int(player["Hmultiplier"])*(user.level+100)/90
       else:
-        print("you just attacked "+str(location.baddies.name) +" with: your mighty fists")
-      if monsterhealth<1:
-        print("you have just killed "+str(location.baddies.name))
-        
-        player["points"]=player["points"]+int(location.baddies.health)
-        level_upper(int(location.baddies.health),int(location.baddies.damage))
-        print("you have found :")
-        for item in location.baddies.contents:
-          if item==None:
-            break
+        yourhealth=(int(user.health))*int(player["Hmultiplier"])*(user.level+100)/90
+      if user.weapon!= None:
+        yourdamage=(int(user.weapon.power)+user.damage)*int(player["Dmultiplier"])*(user.level+100)/90
+      else:
+        yourdamage=(user.damage)*int(player["Dmultiplier"])*(user.level+100)/90
+      monsterdamage=int(location.baddies.damage)
+      monsterhealth=int(location.baddies.health)
+      while neitherdead==0:
+        monsterhealth=monsterhealth-yourdamage
+        if user.weapon!= None: 
+          print("you just attacked "+str(location.baddies.name) +" with: "+ str(user.weapon.name))
+        else:
+          print("you just attacked "+str(location.baddies.name) +" with: your mighty fists")
+        if monsterhealth<1:
+          print("you have just killed "+str(location.baddies.name))
           
-          print("a(n) "+str(item))
-          print("\tDescription: "+str(item.description)+"\n")
-          user.contents.append(item)
-        location.baddies=None
-        break
-      yourhealth=yourhealth-monsterdamage
-      print(str(location.baddies.name)+" just attacked you for: "+str(monsterdamage))
-      if yourhealth<1:
-        print("you have just been killed by "+str(location.baddies.name))
-        player["lives"]=player["lives"]-1
-        if player["lives"]<0:
-          response="dfhsergghj"
+          player["points"]=player["points"]+int(location.baddies.health)
+          print"*"*35
+          print("you have found :")
+          for item in location.baddies.contents:
+            if item==None:
+              break
+            
+            print("a(n) "+str(item))
+            print("\tDescription: "+str(item.description)+"\n")
+            user.contents.append(item)
+          print"*"*35
+          level_upper(int(location.baddies.health),int(location.baddies.damage))
+          location.baddies=None
+          i=raw_input("Press Enter to continue")
+          for i in range(50):
+            print
           break
-        print("you only have: "+str(player["lives"])+" lives/life left")
-        break
-      print("Your HP: "+str(int(yourhealth)))
-      print(str(location.baddies.name)+"'s HP " +str(int(monsterhealth)))
+        yourhealth=yourhealth-monsterdamage
+        print(str(location.baddies.name)+" just attacked you for: "+str(monsterdamage))
+        if yourhealth<1:
+          print("you have just been killed by "+str(location.baddies.name))
+          player["lives"]=player["lives"]-1
+          if player["lives"]<0:
+            response="dfhsergghj"
+            break
+          print("you only have: "+str(player["lives"])+" lives/life left")
+          break
+        print("Your HP: "+str(int(yourhealth)))
+        print(str(location.baddies.name)+"'s HP " +str(int(monsterhealth)))
       
     
 #This holds ALL the functions that you could run    
@@ -479,7 +497,7 @@ def what_you_do(holder):
   if holder[0]=="points":
     scorecheck()
 
-
+ALLITEMS=list()
 #Your items found in game
 class Object:
   def __init__(self, name, value, description, power=0, equip="item",atloc='',usable="no",world="no",destroy="no"):
@@ -496,12 +514,14 @@ class Object:
     self.destroy=destroy
     self.effect=""
     self.changer=list()
-
+    self.startup()
   def __str__(self):
     return str(self.name)
 
   def __eq__(self,other):
     return self.name == other
+  def startup(self):
+    ALLITEMS.append(self)
 ###################################################################################################################
 
 #############################################################################################################
@@ -525,7 +545,7 @@ i5=Object("Blood Diamond",150000,"a blood diamond, formed from vast amounts of b
 i6=Object("ball", 1500, "a ball that looks like a pong ball",10)
 i7=Object("King's scepter", 10000, "a silver sceptre",30)
 i8=Object("vorpel sword", 200, "a strange looking sword",1000)
-i9=Object("bedpan", 3, "a smelly metal bowl",2)
+i9=Object("rusty spoon", 3, "a smelly metal spoon",2)
 i10=Object("skull", 15000, "a giant skull",100)
 i11=Object("talon", 1500, "a giant talon",100)
 i12=Object("lint", 100, "a piece of lint",100)
@@ -737,26 +757,9 @@ f1=FinalBoss("EECS Instructor","gray","warrior")
 
 ######################################################################################################################
 
-class cause_n_effect:
-  def __init__(self,name,effect,uses=''):
-    self.name=name
-    self.effect=effect
-    self.changer=list()
-    self.uses=uses
-  def __str__(self):
-    return str(self.name)
-  def __eq__(self,other):
-    return self.name == other
 
 
-#the name part is your trigger, so in this case it is the crown, if you use the crown in the bedroom you will see this effect
-crown_explosion= cause_n_effect("crown", "you dawn the crown of a dead king!\n The walls begin to BLEEEEDDDDDDD! Why would you do such a thing!")
-bedpan_massacre= cause_n_effect("bedpan","you just spilled feces all over the place...you are a disgusting man, but a key dropped")
-bedpan_massacre.changer.append(key)
-key_use = cause_n_effect("key", "a door slides open and behind it is a CAVE! Nice find "+str(name)+"!")
-fire_spolde= cause_n_effect("torch", "The prison bursts in flames, revealing a hidden gem! Nice find "+str(name)+"!")
-fire_spolde.changer.append(key)
-#################
+
 ############################################################################################
 class floor:
   def __init__(self,name,rooms=list()):
@@ -812,6 +815,7 @@ castle_entrance.description="the starting place of the dungeon"
 castle_entrance.x=10
 castle_entrance.y=10
 castle_entrance.contents.append(key)
+
 
 cell1=Room("Prison Cell")
 cell1.description="just your average cell"
@@ -1043,6 +1047,7 @@ goodWeapon=Room("Hidden Armory")
 goodWeapon.description="A grand weapon sits in the middle of the room"
 goodWeapon.x=1900
 goodWeapon.y=1500
+goodWeapon.contents.append(good_w)
 hallway44.makekey(19,15,goodWeapon,"yes")
 hallway50.makekey(19,15,goodWeapon,"yes")
 
@@ -1215,6 +1220,47 @@ best_room2.contents.append(best_s)
 best_room1.makekey(23,15,best_room2,"yes")
 
 
+
+
+
+
+#####################################################################################
+class cause_n_effect:
+  def __init__(self,name,effect,locational,uses=None):
+    self.name=name
+    self.effect=effect
+    self.changer=list()
+    self.uses=uses
+    self.world="No"
+    self.locational=locational
+    self.starter()
+  def __str__(self):
+    return str(self.name)
+  def __eq__(self,other):
+    return self.name == other
+  def starter(self):
+    print self.locational
+    self.locational.usables.append(self)
+    print self.locational.usables
+    for item in ALLITEMS:
+      if item.name == self.name:
+        w1=copy.deepcopy(item)
+        self.locational.contents.append(w1)
+        break
+    if self.uses != None:
+      for item in ALLITEMS:
+        if item.name == self.uses:
+          print item.name
+          self.changer.append(item)
+
+#            All Cause and Effect for rooms go here
+#             format= the item you want to affect it, the description when used, the location you can use it, what drops
+bedpan_massacre= cause_n_effect("bedpan","you just spilled feces all over the place...you are a disgusting man, but a key dropped",castle_entrance,"key")
+
+
+
+
+
 #These are all of the commands in the game
 commandlist = dict()
 
@@ -1240,14 +1286,15 @@ location= castle_entrance
 castle_entrance.visitedFun()
 #to test bag functionality
 
-user.shield=perfect_w
-user.weapon=perfect_s
+user.weapon=perfect_w
+user.shield=perfect_s
 
 #This is really the only executed code for the whole game, its long because of the quitting functionality
 #You can only save your score if you quit properly
 #that means typing the word quit and then no
 
-
+for i in range(40):
+  print
 
 #import fixer as f
 
