@@ -809,19 +809,21 @@ level1= floor("ground level")
 
 #Your room object
 class Room:
-  def __init__(self,name,north=None,east=None,west=None,south=None,description="Just a plain wall"):
+  def __init__(self, name, x, y, description="Just a plain wall"):
     self.name=name
-    self.north=north
-    self.east=east
-    self.west=west
-    self.south=south
+    self.north=None
+    self.east=None
+    self.west=None
+    self.south=None
     self.description=description
     self.contents=list()
     self.baddies=None
     self.used=list()
     self.usables=list()
-    self.x=0
-    self.y=0
+    self.x=x
+    self.y=y
+    self.map_x = (x - 9) * 48
+    self.map_y = (y - 6) * 48
     self.visited=False
     self.start_up()
     self.key=i1
@@ -846,412 +848,256 @@ class Room:
 ############################################################################################################
 #Add rooms Below
 
-castle_entrance=Room("The Castle Entrance")
-castle_entrance.description="the starting place of the dungeon"
-castle_entrance.x=10
-castle_entrance.y=10
+castle_entrance=Room("The Castle Entrance", 10, 10, "the starting place of the dungeon")
 castle_entrance.contents.append(key)
 
+cell1=Room("Prison Cell", 10, 16, "just your average cell" )
 
-cell1=Room("Prison Cell")
-cell1.description="just your average cell"
-cell1.x=10
-cell1.y=16
+cell2=Room("Prison Cell", 9, 15, "just your average cell")
 
-cell2=Room("Prison Cell")
-cell2.description="just your average cell"
-cell2.x=9
-cell2.y=15
+cell3=Room("Prison Cell", 9, 16, "just your average cell")
 
-cell3=Room("Prison Cell")
-cell3.description="just your average cell"
-cell3.x=9
-cell3.y=16
+hallway1=Room("Hallway", 11, 8, "links other rooms, and may contain a torch or two")
 
-hallway1=Room("Hallway")
-hallway1.description="links other rooms, and may contain a torch or two"
-hallway1.x=11
-hallway1.y=8
+hallway2=Room("Hallway", 11, 9, "links other rooms, and may contain a torch or two")
 
-hallway2=Room("Hallway")
-hallway2.description="links other rooms, and may contain a torch or two"
-hallway2.x=11
-hallway2.y=9
+hallway3=Room("Hallway", 11, 10, "links other rooms, and may contain a torch or two")
 
-hallway3=Room("Hallway")
-hallway3.description="links other rooms, and may contain a torch or two"
-hallway3.x=11
-hallway3.y=10
+hallway4=Room("Hallway", 11, 11, "links other rooms, and may contain a torch or two")
 
-hallway4=Room("Hallway")
-hallway4.description="links other rooms, and may contain a torch or two"
-hallway4.x=11
-hallway4.y=11
+hallway5=Room("Hallway", 11, 12, "links other rooms, and may contain a torch or two")
 
-hallway5=Room("Hallway")
-hallway5.description="links other rooms, and may contain a torch or two"
-hallway5.x=11
-hallway5.y=12
+hallway6=Room("Hallway", 12, 10, "links other rooms, and may contain a torch or two")
 
-hallway6=Room("Hallway")
-hallway6.description="links other rooms, and may contain a torch or two"
-hallway6.x=12
-hallway6.y=10
+hallway7=Room("Hallway", 13, 10, "links other rooms, and may contain a torch or two")
 
-hallway7=Room("Hallway")
-hallway7.description="links other rooms, and may contain a torch or two"
-hallway7.x=13
-hallway7.y=10
+hallway8=Room("Hallway", 14, 8, "links other rooms, and may contain a torch or two")
 
-hallway8=Room("Hallway")
-hallway8.description="links other rooms, and may contain a torch or two"
-hallway8.x=14
-hallway8.y=8
+hallway9=Room("Hallway", 14, 9, "links other rooms, and may contain a torch or two")
 
-hallway9=Room("Hallway")
-hallway9.description="links other rooms, and may contain a torch or two"
-hallway9.x=14
-hallway9.y=9
+hallway10=Room("Hallway", 14, 10, "links other rooms, and may contain a torch or two")
 
-hallway10=Room("Hallway")
-hallway10.description="links other rooms, and may contain a torch or two"
-hallway10.x=14
-hallway10.y=10
+hallway11=Room("Hallway", 14, 11, "links other rooms, and may contain a torch or two")
 
-hallway11=Room("Hallway")
-hallway11.description="links other rooms, and may contain a torch or two"
-hallway11.x=14
-hallway11.y=11
+hallway12=Room("Hallway", 14, 12, "links other rooms, and may contain a torch or two")
 
-hallway12=Room("Hallway")
-hallway12.description="links other rooms, and may contain a torch or two"
-hallway12.x=14
-hallway12.y=12
+hallway13=Room("Hallway", 15, 10, "links other rooms, and may contain a torch or two")
 
-hallway13=Room("Hallway")
-hallway13.description="links other rooms, and may contain a torch or two"
-hallway13.x=15
-hallway13.y=10
+hallway14=Room("Hallway", 16, 10, "links other rooms, and may contain a torch or two")
 
-hallway14=Room("Hallway")
-hallway14.description="links other rooms, and may contain a torch or two"
-hallway14.x=16
-hallway14.y=10
+hallway15=Room("Hallway", 17, 10, "links other rooms, and may contain a torch or two")
 
-hallway15=Room("Hallway")
-hallway15.description="links other rooms, and may contain a torch or two"
-hallway15.x=17
-hallway15.y=10
+hallway16=Room("Hallway", 17, 11, "links other rooms, and may contain a torch or two")
 
-hallway16=Room("Hallway")
-hallway16.description="links other rooms, and may contain a torch or two"
-hallway16.x=17
-hallway16.y=11
+hallway17=Room("Hallway", 17, 12, "links other rooms, and may contain a torch or two")
 
-hallway17=Room("Hallway")
-hallway17.description="links other rooms, and may contain a torch or two"
-hallway17.x=17
-hallway17.y=12
+hallway18=Room("Hallway", 17, 13, "links other rooms, and may contain a torch or two")
 
-hallway18=Room("Hallway")
-hallway18.description="links other rooms, and may contain a torch or two"
-hallway18.x=17
-hallway18.y=13
+hallway19=Room("Hallway", 17, 14, "links other rooms, and may contain a torch or two")
 
-hallway19=Room("Hallway")
-hallway19.description="links other rooms, and may contain a torch or two"
-hallway19.x=17
-hallway19.y=14
+hallway20=Room("Hallway", 17, 15, "links other rooms, and may contain a torch or two")
 
-hallway20=Room("Hallway")
-hallway20.description="links other rooms, and may contain a torch or two"
-hallway20.x=17
-hallway20.y=15
+hallway21=Room("Hallway", 17, 16, "links other rooms, and may contain a torch or two")
 
-hallway21=Room("Hallway")
-hallway21.description="links other rooms, and may contain a torch or two"
-hallway21.x=17
-hallway21.y=16
+hallway22=Room("Hallway", 17, 17, "links other rooms, and may contain a torch or two")
 
-hallway22=Room("Hallway")
-hallway22.description="links other rooms, and may contain a torch or two"
-hallway22.x=17
-hallway22.y=17
+hallway23=Room("Hallway", 17, 18, "links other rooms, and may contain a torch or two")
 
-hallway23=Room("Hallway")
-hallway23.description="links other rooms, and may contain a torch or two"
-hallway23.x=17
-hallway23.y=18
+hallway24=Room("Hallway", 17, 19, "links other rooms, and may contain a torch or two")
 
-hallway24=Room("Hallway")
-hallway24.description="links other rooms, and may contain a torch or two"
-hallway24.x=17
-hallway24.y=19
+hallway25=Room("Hallway", 16, 19, "links other rooms, and may contain a torch or two")
 
-hallway25=Room("Hallway")
-hallway25.description="links other rooms, and may contain a torch or two"
-hallway25.x=16
-hallway25.y=19
+hallway26=Room("Hallway", 15, 19, "links other rooms, and may contain a torch or two")
 
-hallway26=Room("Hallway")
-hallway26.description="links other rooms, and may contain a torch or two"
-hallway26.x=15
-hallway26.y=19
+hallway27=Room("Hallway", 15, 20, "links other rooms, and may contain a torch or two")
 
-hallway27=Room("Hallway")
-hallway27.description="links other rooms, and may contain a torch or two"
-hallway27.x=15
-hallway27.y=20
+hallway28=Room("Hallway", 15, 21, "links other rooms, and may contain a torch or two")
 
-hallway28=Room("Hallway")
-hallway28.description="links other rooms, and may contain a torch or two"
-hallway28.x=15
-hallway28.y=21
+hallway34=Room("Hallway", 13, 20, "links other rooms, and may contain a torch or two")
 
-hallway34=Room("Hallway")
-hallway34.description="links other rooms, and may contain a torch or two"
-hallway34.x=13
-hallway34.y=20
+hallway35=Room("Hallway"13, 21, "links other rooms, and may contain a torch or two")
 
-hallway35=Room("Hallway")
-hallway35.description="links other rooms, and may contain a torch or two"
-hallway35.x=13
-hallway35.y=21
+hallway41=Room("Hallway", 14, 19, "links other rooms, and may contain a torch or two")
 
-hallway41=Room("Hallway")
-hallway41.description="links other rooms, and may contain a torch or two"
-hallway41.x=14
-hallway41.y=19
+hallway42=Room("Hallway", 13, 19, "links other rooms, and may contain a torch or two")
 
-hallway42=Room("Hallway")
-hallway42.description="links other rooms, and may contain a torch or two"
-hallway42.x=13
-hallway42.y=19
+hallway43=Room("Hallway", 18, 14, "links other rooms, and may contain a torch or two")
 
-hallway43=Room("Hallway")
-hallway43.description="links other rooms, and may contain a torch or two"
-hallway43.x=18
-hallway43.y=14
-
-hallway44=Room("Hallway")
-hallway44.description="links other rooms, and may contain a torch or two"
-hallway44.x=19
-hallway44.y=14
+hallway44=Room("Hallway", 19, 14, "links other rooms, and may contain a torch or two")
 hallway44.baddies=random.choice(bosslist)
 
-hallway45=Room("Hallway")
-hallway45.description="links other rooms, and may contain a torch or two"
-hallway45.x=20
-hallway45.y=14
+hallway45=Room("Hallway", 20, 14, "links other rooms, and may contain a torch or two")
 
-hallway46=Room("Hallway")
-hallway46.description="links other rooms, and may contain a torch or two"
-hallway46.x=21
-hallway46.y=14
+hallway46=Room("Hallway", 21, 14, "links other rooms, and may contain a torch or two")
 
-hallway47=Room("Hallway")
-hallway47.description="A mystical item calls you nearby. '{0}? {0}, is that you?' ".format(user.name)
-hallway47.x=22
-hallway47.y=14
+hallway47=Room("Hallway", 22, 14, "A mystical item calls you nearby. '{0}? {0}, is that you?' ".format(user.name))
 
-hallway49=Room("Hallway")
-hallway49.description="links other rooms, and may contain a torch or two"
-hallway49.x=18
-hallway49.y=16
+hallway49=Room("Hallway", 18, 16, "links other rooms, and may contain a torch or two")
 
-hallway50=Room("Hallway")
-hallway50.description="links other rooms, and may contain a torch or two"
-hallway50.x=19
-hallway50.y=16
+hallway50=Room("Hallway", 19, 16, "links other rooms, and may contain a torch or two")
 
-hallway51=Room("Hallway")
-hallway51.description="links other rooms, and may contain a torch or two"
-hallway51.x=20
-hallway51.y=16
+hallway51=Room("Hallway", 20, 16, "links other rooms, and may contain a torch or two")
 
-hallway52=Room("Hallway")
-hallway52.description="links other rooms, and may contain a torch or two"
-hallway52.x=21
-hallway52.y=16
+hallway52=Room("Hallway", 21, 16, "links other rooms, and may contain a torch or two")
 
-hallway53=Room("Hallway")
-hallway53.description="A mystical item calls you nearby. '{0}? {0}, is that you?' ".format(user.name)
-hallway53.x=22
-hallway53.y=16
+hallway53=Room("Hallway", 22, 16, "A mystical item calls you nearby. '{0}? {0}, is that you?' ".format(user.name))
 
-goodWeapon=Room("Hidden Armory")
+goodWeapon=Room("Hidden Armory", 1900, 1500, "A grand weapon sits in the middle of the room")
 goodWeapon.description="A grand weapon sits in the middle of the room"
-goodWeapon.x=1900
-goodWeapon.y=1500
+goodWeapon.map_x=(19 - 9) * 48
+goodWeapon.map_y=(15 - 6) * 48
 goodWeapon.contents.append(good_w)
 hallway44.makekey(19,15,goodWeapon,"yes")
 hallway50.makekey(19,15,goodWeapon,"yes")
 
-room1=Room("Room")
+room1=Room("Room", 11, 13)
 room1.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
-room1.x=11
-room1.y=13
 
 
-room2=Room("Room")
+room2=Room("Room", 11, 7)
 room2.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
-room2.x=11
-room2.y=7
 
 
-room20=Room("Secret Room")
+room20=Room("Secret Room", 600, 600)
 room20.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
-room20.x=600
-room20.y=600
+room20.map_x=(10 - 9) * 48
+room20.map_y=(13 - 6) * 48
 room1.makekey(10,13,room20,"yes")
 
 
-room3=Room("Room")
+room3=Room("Room", 12, 9)
 room3.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
-room3.x=12
-room3.y=9
 
-room4=Room("Room")
+
+room4=Room("Room", 12, 11)
 room4.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
-room4.x=12
-room4.y=11
 
-room5=Room("Room")
+
+room5=Room("Room", 13, 7)
 room5.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
-room5.x=13
-room5.y=7
 
-room6=Room("Room")
+room6=Room("Room", 14, 6)
 room6.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
-room6.x=14
-room6.y=6
 
-room7=Room("Room")
+
+room7=Room("Room", 15, 7)
 room7.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
-room7.x=15
-room7.y=7
 
-room8=Room("Room")
+
+room8=Room("Room", 13, 12)
 room8.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
-room8.x=13
-room8.y=12
 
-room9=Room("Room")
+
+room9=Room("Room", 14, 13)
 room9.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
-room9.x=14
-room9.y=13
 
-room10=Room("Room")
+
+room10=Room("Room", 15, 12)
 room10.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
-room10.x=15
-room10.y=12
 
-boss1=Room("Boss Room")
+
+boss1=Room("Boss Room", 13, 22)
 boss1.description="A boss lies in wait"
-boss1.x=13
-boss1.y=22
 boss1.baddies=random.choice(bosslist)
 
-boss2=Room("Boss Room")
+boss2=Room("Boss Room", 1300, 2300)
 boss2.description="A boss lies in wait"
-boss2.x=1300
-boss2.y=2300
+boss2.map_x=(13 - 9) * 48
+boss2.map_y=(23 - 6) * 48
 boss1.makekey(13,23,boss2,"yes")
 boss2.baddies=random.choice(bosslist)
 
 
-boss3=Room("Boss Room")
+boss3=Room("Boss Room", 1300, 2400)
 boss3.description="A boss lies in wait"
-boss3.x=1300
-boss3.y=2400
+boss3.map_x=(13 - 9) * 48
+boss3.map_y=(24 - 6) * 48
 boss2.makekey(13,24,boss3,"yes")
 boss3.baddies=random.choice(bosslist)
 
-boss4=Room("Boss Room")
+boss4=Room("Boss Room", 13, 2500)
 boss4.description="A boss lies in wait"
-boss4.x=13
-boss4.y=2500
+boss4.map_x=(13 - 9) * 48
+boss4.map_y=(25 - 6) * 48
 boss3.makekey(13,25,boss4,"yes")
 boss4.baddies=random.choice(bosslist)
 
-boss5=Room("Boss Room")
+boss5=Room("Boss Room", 13, 2600)
 boss5.description="A boss lies in wait"
-boss5.x=13
-boss5.y=2600
+boss5.map_x=(13 - 9) * 48
+boss5.map_y=(26 - 6) * 48
 boss4.makekey(13,26,boss5,"yes")
 boss5.baddies=random.choice(bosslist)
 
-boss6=Room("Boss Room")
+boss6=Room("Boss Room", 15, 22)
 boss6.description="A boss lies in wait"
 boss6.x=15
 boss6.y=22
 boss6.baddies=random.choice(bosslist)
 
-boss7=Room("Boss Room")
+boss7=Room("Boss Room", 15, 2300)
 boss7.description="A boss lies in wait"
-boss7.x=15
-boss7.y=2300
+boss7.map_x=(15 - 9) * 48
+boss7.map_y=(23 - 6) * 48
 boss6.makekey(15,23,boss7,"yes")
 boss7.baddies=random.choice(bosslist)
 
-boss8=Room("Boss Room")
+boss8=Room("Boss Room", 15, 2400)
 boss8.description="A boss lies in wait"
-boss8.x=15
-boss8.y=2400
+boss8.map_x=(15 - 9) * 48
+boss8.map_y=(24 - 6) * 48
 boss7.makekey(15,24,boss8,"yes")
 boss8.baddies=random.choice(bosslist)
 
-boss9=Room("Boss Room")
+boss9=Room("Boss Room", 15, 2500)
 boss9.description="A boss lies in wait"
-boss9.x=15
-boss9.y=2500
+boss9.map_x=(15 - 9) * 48
+boss9.map_y=(25 - 6) * 48
 boss8.makekey(15,25,boss9,"yes")
 boss9.baddies=random.choice(bosslist)
 
-boss10=Room("Boss Room")
+boss10=Room("Boss Room", 15, 2600)
 boss10.description="A boss lies in wait"
-boss10.x=15
-boss10.y=2600
+boss10.map_x=(15 - 9) * 48
+boss10.map_y=(26 - 6) * 48
 boss9.makekey(15,26,boss10,"yes")
 boss10.baddies=random.choice(bosslist)
 
-boss11=Room("Boss Room")
+boss11=Room("Boss Room", 14, 2600)
 boss11.description="The Final boss lies in wait {0}. You had better be prepared".format(user.name)
-boss11.x=14
-boss11.y=2600
+boss11.map_x=(14 - 9) * 48
+boss11.map_y=(26 - 6) * 48
 boss10.makekey(14,26,boss11,"yes")
 boss5.makekey(14,26,boss11,"yes")
 boss11.baddies=random.choice(Fbosslist)
 
-treasureRoom1=Room("Treasure Room")
+treasureRoom1=Room("Treasure Room", 900, 1700)
 treasureRoom1.description="Contains a vast amount of treasure"
-treasureRoom1.x=900
-treasureRoom1.y=1700
+treasureRoom1.map_x=(9 - 9) * 48
+treasureRoom1.map_y=(17 - 6) * 48
 cell3.makekey(9,17,treasureRoom1,"yes")
 
 
-cave1=Room("Cave")
+cave1=Room("Cave", 10, 14)
 cave1.description=("Seems pretty damp")
-cave1.x=10
-cave1.y=14
 
-prison1=Room("Prison")
+
+prison1=Room("Prison", 10, 15)
 prison1.description=("Seems pretty cramped")
-prison1.x=10
-prison1.y=15
 
-best_room1=Room("Altar of a grand Weapon")
+
+best_room1=Room("Altar of a grand Weapon", 2200, 1500)
 best_room1.description=("Emense power eminates from the room...and possibly else where?")
-best_room1.x=2200
-best_room1.y=1500
+best_room1.map_x=(22 - 9) * 48
+best_room1.map_y=(15 - 6) * 48
 best_room1.contents.append(best_w)
 hallway47.makekey(22,15,best_room1,"yes")
 hallway53.makekey(22,15,best_room1,"yes")
 
-best_room2=Room("Altar of a grand shield")
+best_room2=Room("Altar of a grand shield", 2300, 1500)
 best_room2.description=("Emense power eminates from the room...and possibly else where?")
-best_room2.x=2300
-best_room2.y=1500
+best_room2.map_x=(23 - 9) * 48
+best_room2.map_y=(15 - 6) * 48
 best_room2.contents.append(best_s)
 best_room1.makekey(23,15,best_room2,"yes")
 
