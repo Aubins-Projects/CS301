@@ -958,6 +958,9 @@ goodWeapon.contents.append(good_w)
 hallway44.makekey(19,15,goodWeapon,"yes")
 hallway50.makekey(19,15,goodWeapon,"yes")
 
+
+
+
 room1=Room("Room", 11, 13)
 room1.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
 
@@ -1003,6 +1006,10 @@ room9.description="might hold a secret or {0}".format(random.choice(["two","thre
 room10=Room("Room", 15, 12)
 room10.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
 
+room11=Room("Room", 14, 7)
+room11.description="might hold a secret or {0}".format(random.choice(["two","three","four","five","six","none","not a secret, that is the question"]))
+
+
 
 boss1=Room("Boss Room", 13, 22)
 boss1.description="A boss lies in wait"
@@ -1042,6 +1049,20 @@ boss6.description="A boss lies in wait"
 boss6.x=15
 boss6.y=22
 boss6.baddies=random.choice(bosslist)
+
+goodShield=Room("Hidden Armory", 1400, 2200, "A grand weapon sits in the middle of the room")
+goodShield.description="A grand shield sits in the middle of the room"
+goodShield.map_x=(14 - 9) * 48
+goodShield.map_y=(22 - 6) * 48
+goodShield.contents.append(good_s)
+boss1.makekey(14,22,goodShield,"yes")
+boss6.makekey(14,22,goodShield,"yes")
+
+
+
+
+
+
 
 boss7=Room("Boss Room", 15, 2300)
 boss7.description="A boss lies in wait"
@@ -1175,8 +1196,8 @@ print("\ntype help for a list of all commands\n")
 location= castle_entrance
 castle_entrance.visitedFun()
 #to test bag functionality  
-user.weapon=broken_w
-user.shield=broken_s
+user.weapon=perfect_w
+user.shield=perfect_s
 
 #This is really the only executed code for the whole game, its long because of the quitting functionality
 #You can only save your score if you quit properly
