@@ -62,6 +62,13 @@ def class_adaption(classs,player):
 def look(what):
   print(what.description)
 
+def cool_map(words,the_lv):
+  if holder[0]=="map":
+    import map_function
+    map_function.display(the_lv)
+      
+
+
 
 #This if for looking at the entire room
 def room_contents_look(what):
@@ -518,6 +525,7 @@ def what_you_do(holder):
   help_command(holder)
   attack_command(holder)
   give_command(holder)
+  cool_map(holder,level1)
   if holder[0]=="points":
     scorecheck()
 
@@ -915,7 +923,7 @@ hallway28=Room("Hallway", 15, 21, "links other rooms, and may contain a torch or
 
 hallway34=Room("Hallway", 13, 20, "links other rooms, and may contain a torch or two")
 
-hallway35=Room("Hallway"13, 21, "links other rooms, and may contain a torch or two")
+hallway35=Room("Hallway", 13, 21, "links other rooms, and may contain a torch or two")
 
 hallway41=Room("Hallway", 14, 19, "links other rooms, and may contain a torch or two")
 
