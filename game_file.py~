@@ -1221,7 +1221,7 @@ while not response  == "dfhsergghj":
   for i in range(len(holder)):
     if i>1:
       holder[1]+=" "+str(holder[i])
-  print holder
+#  print holder
   mapping()
   what_you_do(holder)
   if holder[0] not in ["look","l"]:

@@ -457,6 +457,8 @@ def help_command(holder):
 def attack_command(holder):
   if holder[0]=="attack":
     if location.baddies:
+      import fight
+      fight.fight()
       print"="*11+"BATTLE"+"="*11
       neitherdead=0
       if user.shield!= None:
