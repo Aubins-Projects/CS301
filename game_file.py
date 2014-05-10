@@ -458,7 +458,7 @@ def attack_command(holder):
   if holder[0]=="attack":
     if location.baddies:
       import fight
-      fight.fight()
+      fight.fight(int(location.baddies.damage) + int(location.baddies.health))
       print"="*11+"BATTLE"+"="*11
       neitherdead=0
       if user.shield!= None:
