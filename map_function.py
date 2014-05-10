@@ -16,7 +16,7 @@ def display(level, curr_x, curr_y):
   pygame.display.set_caption("MAP")
   background = pygame.image.load(background_img).convert()
   curr_room = pygame.image.load(curr_room_img).convert()
-	curr_room.set_colorkey((255,255,255), RLEACCEL)
+  curr_room.set_colorkey((255,255,255), RLEACCEL)
   for room in level.rooms:
     blocks[room.name] = pygame.image.load(block_img).convert()
 
@@ -29,14 +29,12 @@ def display(level, curr_x, curr_y):
         
         if event.type == QUIT:
           pygame.quit()
-          running=False
-          break
+          return
           
         elif event.type == KEYDOWN:
           if event.key == K_q:
             pygame.quit()
-            running=False
-            break
+            return
               
       screen.blit(background, (0, 0))
       for room in level.rooms:
@@ -48,3 +46,4 @@ def display(level, curr_x, curr_y):
       pygame.display.update()
   except:
     pygame.quit()
+    return
