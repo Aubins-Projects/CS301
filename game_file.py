@@ -62,10 +62,10 @@ def class_adaption(classs,player):
 def look(what):
   print(what.description)
 
-def cool_map(words,the_lv):
+def cool_map(words,the_lv, player["x"], player["y"]):
   if holder[0]=="map":
     import map_function
-    map_function.display(the_lv)
+    map_function.display(the_lv, (player["x"] - 9) * 48, (player["y"] - 6) * 48)
       
 
 
