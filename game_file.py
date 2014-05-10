@@ -746,7 +746,7 @@ class monster:
         x=random.choice(common.items)
         if  x != self.takes:
           self.hates.append(x)
-          print x
+          #print x
     else:
       self.health=random.randint(100,200)*(user.level+random.randint(8,12))
       self.damage=random.randint(1,40)*(user.level+random.randint(5,9))
@@ -1156,9 +1156,9 @@ class cause_n_effect:
   def __eq__(self,other):
     return self.name == other
   def starter(self):
-    print self.locational
+    #print self.locational
     self.locational.usables.append(self)
-    print self.locational.usables
+    #print self.locational.usables
     for item in ALLITEMS:
       if item.name == self.name:
         w1=copy.deepcopy(item)
@@ -1167,7 +1167,7 @@ class cause_n_effect:
     if self.uses != None:
       for item in ALLITEMS:
         if item.name == self.uses:
-          print item.name
+          #print item.name
           self.changer.append(item)
 
 #            All Cause and Effect for rooms go here
@@ -1222,20 +1222,19 @@ while not response  == "dfhsergghj":
     ask_ok("You are about to quit, type no to quit")
     if player["relive"]==0:
       response="dfhsergghj"
-#  try:
-  holder=(response.split())
-  for i in range(len(holder)):
-    if i>1:
-      holder[1]+=" "+str(holder[i])
-#  print holder
-  mapping()
-  what_you_do(holder)
-  if holder[0] not in ["look","l"]:
+  try:
+    holder=(response.split())
+    for i in range(len(holder)):
+      if i>1:
+        holder[1]+=" "+str(holder[i])
+  #  print holder
     mapping()
-    what_you_do(['l','a'])
-#  except:
-
-#    print("type a command please")
+    what_you_do(holder)
+    if holder[0] not in ["look","l"]:
+      mapping()
+      what_you_do(['l','a'])
+  except:
+    print("type a command please")
 
 #f.file_fixer()
 
