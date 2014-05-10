@@ -1,11 +1,19 @@
 import pygame, sys, random
 from pygame.locals import *
 
-def createWall(img_path):
+def createWall(img_path, monster_points):
+	if monster_points < 100:
+		monster_points_wall_holes = 6
+	elif monster_points > 100 and monster_points < 1000:
+		monster_points_wall_holes = 4
+	elif monster_points > 1000 and monster_points < 10000:
+		monster_points_wall_holes = 3
+	else:
+		monster_points_wall_holes = 2
 	images = []
 	for val in range(10):
 		images.append(pygame.image.load(img_path).convert())
-	for val in random.sample(range(10), 4):
+	for val in random.sample(range(10), monster_points_wall_holes):
 		images[val] = None
 	return images
 		
@@ -29,8 +37,18 @@ def createWallY(wall_list):
 			lst.append(None)
 			y += 64
 	return lst
+	
+def getBallSpeed(monster_points):
+	if monster_points < 100:
+		return 10
+	elif monster_points > 100 and monster_points < 1000:
+		return 15
+	elif monster_points > 1000 and monster_points < 10000:
+		return 19
+	else:
+		return 21
 
-def fight():
+def fight(monster_points = 0):
 	screen_h, screen_w = 640, 1024
 	screen = pygame.display.set_mode((screen_w, screen_h), 0, 32)
 	pygame.display.set_caption("Fight")
@@ -39,16 +57,16 @@ def fight():
 	background = pygame.image.load(background_img).convert()
 
 	ball_img = "ball.png"
-	ball = pygame.image.load(ball_img).convert_alpha()
-	ball.set_colorkey((0,0,0), RLEACCEL)
+	ball = pygame.image.load(ball_img).convert()
+	ball.set_colorkey((0, 0, 0), RLEACCEL)
 	ball_x, ball_y = screen_h / 2, screen_w / 2
-	ball_speed = 10
+	ball_speed = getBallSpeed(monster_points)
 	ball_x_move, ball_y_move = -ball_speed, ball_speed
 	ball_rect = ball.get_rect()
 	ball_rect.topleft = (ball_x, ball_y)
 
 	paddle_img = "paddle.png"
-	paddle = pygame.image.load(paddle_img).convert_alpha()
+	paddle = pygame.image.load(paddle_img).convert()
 	paddle_x, paddle_y = 1, screen_h / 2
 	paddle_speed = 7
 	paddle_move = 0
@@ -56,7 +74,7 @@ def fight():
 	paddle_rect.topleft = (paddle_x, paddle_y)
 
 	wall_tile_img = "wall_tile.png"
-	wall_list = createWall(wall_tile_img)
+	wall_list = createWall(wall_tile_img, monster_points)
 	wall_x = 1004
 	wall_y_list = createWallY(wall_list)
 	wall_rects = createWallRects(wall_list)
@@ -106,12 +124,13 @@ def fight():
 			
 		if ball_rect.colliderect(paddle_rect):
 			ball_x_move = +ball_speed
-			hits += 10
+			hits += 1
 			
 		for rect in wall_rects:
 			if not rect == None:
 				if rect.colliderect(ball_rect):
 					ball_x_move = -ball_speed
+					hits += 1
 				
 		if ball_x > 1024:
 			end = True
