@@ -59,7 +59,7 @@ def fight(monster_points = 0):
 	ball_img = "ball.png"
 	ball = pygame.image.load(ball_img).convert()
 	ball.set_colorkey((0, 0, 0), RLEACCEL)
-	ball_x, ball_y = screen_h / 2, screen_w / 2
+	ball_x, ball_y = screen_w / 2, screen_h / 2
 	ball_speed = getBallSpeed(monster_points)
 	ball_x_move, ball_y_move = -ball_speed, ball_speed
 	ball_rect = ball.get_rect()
@@ -67,8 +67,9 @@ def fight(monster_points = 0):
 
 	paddle_img = "paddle.png"
 	paddle = pygame.image.load(paddle_img).convert()
+	paddle.set_colorkey((0, 0, 0), RLEACCEL)
 	paddle_x, paddle_y = 1, screen_h / 2
-	paddle_speed = 7
+	paddle_speed = 25
 	paddle_move = 0
 	paddle_rect = paddle.get_rect()
 	paddle_rect.topleft = (paddle_x, paddle_y)
@@ -86,15 +87,16 @@ def fight(monster_points = 0):
 	FPS = 30
 	hits = 0
 	speedUpHits = 2
-	speedUpIncrement = 1
+	speedUpIncrement = 2
 	end = False
+	start_up = True
 	
 	while not end:
 		
 		if hits == speedUpHits:
 			ball_speed += speedUpIncrement
 			hits = 0
-			speedUpHits *= 1.25
+			speedUpHits += 2
 			
 		for event in pygame.event.get():
 	
@@ -145,6 +147,12 @@ def fight(monster_points = 0):
 			
 		if ball_y > 616:
 			ball_y_move = -ball_speed
+		
+		if paddle_y < 0:
+			paddle_y = 0
+		
+		if paddle_y > 640 - paddle_rect.height:
+			paddle_y = 640 - paddle_rect.height
 				
 		ball_x += ball_x_move
 		ball_y += ball_y_move
@@ -164,3 +172,7 @@ def fight(monster_points = 0):
 		clock.tick(FPS)
 
 		pygame.display.update()
+		
+		if start_up == True:
+			pygame.time.delay(750)
+			start_up = False
