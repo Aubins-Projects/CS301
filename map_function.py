@@ -1,7 +1,7 @@
 import pygame, sys
 from pygame.locals import *
 
-def display(level, room):
+def display(level, curr_x, curr_y):
   screen_h = 1012
   screen_w = 724
 
@@ -43,7 +43,7 @@ def display(level, room):
         if not room.visited:
           screen.blit(blocks[room.name], (room.map_x, room.map_y))
         
-      screen.blit(curr_room, (room.map_x - 1 , room.map_y - 1))
+      screen.blit(curr_room, (curr_x - 1 , curr_y - 1))
       
       pygame.display.update()
   except:
