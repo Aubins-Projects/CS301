@@ -457,7 +457,10 @@ def help_command(holder):
 def attack_command(holder):
   if holder[0]=="attack":
     if location.baddies:
+      import fight
+      win=fight.fight(int(location.baddies.damage) + int(location.baddies.health))
       print"="*11+"BATTLE"+"="*11
+      '''
       neitherdead=0
       if user.shield!= None:
         yourhealth=(int(user.health) + int(user.shield.power))*int(player["Hmultiplier"])*(user.level+100)/90
@@ -475,38 +478,41 @@ def attack_command(holder):
           print("you just attacked "+str(location.baddies.name) +" with: "+ str(user.weapon.name))
         else:
           print("you just attacked "+str(location.baddies.name) +" with: your mighty fists")
-        if monsterhealth<1:
-          print("you have just killed "+str(location.baddies.name))
-          
-          player["points"]=player["points"]+int(location.baddies.health)
-          print"*"*35
-          print("you have found :")
-          for item in location.baddies.contents:
-            if item==None:
-              break
-            
-            print("a(n) "+str(item))
-            print("\tDescription: "+str(item.description)+"\n")
-            user.contents.append(item)
-          print"*"*35
-          level_upper(int(location.baddies.health),int(location.baddies.damage))
-          location.baddies=None
-          i=raw_input("Press Enter to continue")
-          for i in range(50):
-            print
-          break
-        yourhealth=yourhealth-monsterdamage
-        print(str(location.baddies.name)+" just attacked you for: "+str(monsterdamage))
-        if yourhealth<1:
-          print("you have just been killed by "+str(location.baddies.name))
-          player["lives"]=player["lives"]-1
-          if player["lives"]<0:
-            response="dfhsergghj"
+      '''
+      if win==True:
+        print("you have just killed "+str(location.baddies.name))
+        
+        player["points"]=player["points"]+int(location.baddies.health)
+        print"*"*35
+        print("you have found :")
+        for item in location.baddies.contents:
+          if item==None:
             break
-          print("you only have: "+str(player["lives"])+" lives/life left")
-          break
-        print("Your HP: "+str(int(yourhealth)))
-        print(str(location.baddies.name)+"'s HP " +str(int(monsterhealth)))
+          
+          print("a(n) "+str(item))
+          print("\tDescription: "+str(item.description)+"\n")
+          user.contents.append(item)
+        print"*"*35
+        level_upper(int(location.baddies.health),int(location.baddies.damage))
+        location.baddies=None
+        i=raw_input("Press Enter to continue")
+        for i in range(50):
+          print
+        
+      #yourhealth=yourhealth-monsterdamage
+      #print(str(location.baddies.name)+" just attacked you for: "+str(monsterdamage))
+    if win==False:
+      print("you have just been killed by "+str(location.baddies.name))
+      player["lives"]=player["lives"]-1
+      if player["lives"]<0:
+        response="dfhsergghj"
+        
+      print("you only have: "+str(player["lives"])+" lives/life left")
+    i=raw_input("Press Enter to continue")
+    for i in range(50):
+      print 
+    #print("Your HP: "+str(int(yourhealth)))
+    #print(str(location.baddies.name)+"'s HP " +str(int(monsterhealth)))
       
     
 #This holds ALL the functions that you could run    

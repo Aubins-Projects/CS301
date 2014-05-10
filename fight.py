@@ -2,11 +2,11 @@ import pygame, sys, random
 from pygame.locals import *
 
 def createWall(img_path, monster_points):
-	if monster_points < 100:
+	if monster_points < 1000:
 		monster_points_wall_holes = 6
-	elif monster_points > 100 and monster_points < 1000:
+	elif monster_points < 5000:
 		monster_points_wall_holes = 4
-	elif monster_points > 1000 and monster_points < 10000:
+	elif monster_points < 10000:
 		monster_points_wall_holes = 3
 	else:
 		monster_points_wall_holes = 2
@@ -133,11 +133,11 @@ def fight(monster_points = 0):
 					hits += 1
 				
 		if ball_x > 1024:
-			end = True
+			pygame.quit()        
 			return True
 			
 		if ball_x < -24:
-			end = True
+			pygame.quit()        
 			return False
 			
 		if ball_y < 0:
