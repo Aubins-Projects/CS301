@@ -1194,6 +1194,7 @@ commandlist['help']="type help [command] learn about command"
 commandlist['attack']="type attack [monster] to attack monster"
 commandlist['grab']="type grab [item] to take an item and place it in your bag"
 commandlist['use']="type use [item] to use an item that is in your bag"
+commandlist['map']="type map to display a map of rooms you have been in and your current room."
 
 print("\ntype help for a list of all commands\n")
 
